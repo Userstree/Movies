@@ -33,7 +33,7 @@ class MovieViewController: UIViewController {
         configureView()
     }
     
-    init(movie: Movie, genre: [String]) {
+    init(movie: DumbMovie, genre: [String]) {
         super.init(nibName: nil, bundle: nil)
         guard let image = movie.image else { return }
         self.imageWithLabel = MovieCardView(.zero, of: image, with: 8.5)

@@ -1,30 +1,27 @@
 //
-//  MoviesEndPoint.swift
+//  MoviesImagesEndpoint.swift
 //  Movies
 //
-//  Created by Dossymkhan Zhulamanov on 18.05.2022.
+//  Created by Dossymkhan Zhulamanov on 19.05.2022.
 //
 
 import Foundation
 
-enum MoviesEndpoint {
-    case upcoming
-    case nowPlaying
+enum MovieImageParametersEndpoint {
+    case image(id: Int)
 }
 
-extension MoviesEndpoint: Endpoint {
+extension MovieImageParametersEndpoint: Endpoint {
     var path: String {
         switch self {
-        case .upcoming:
-            return "movie/upcoming"
-        case .nowPlaying:
-            return "movie/now_playing"
+        case .image (let id):
+            return "movie/\(id)/images"
         }
     }
     
     var method: RequestMethod {
         switch self {
-        case .upcoming, .nowPlaying:
+        case .image(_):
             return .get
         }
     }
@@ -32,7 +29,7 @@ extension MoviesEndpoint: Endpoint {
     var header: [String : String]? {
         let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
         switch self {
-        case .upcoming, .nowPlaying:
+        case .image(_):
             return [
                 "Content-Type" : "application/json;charset=utf-8",
                 "Authorization" : "Bearer \(accessToken)"
@@ -42,7 +39,7 @@ extension MoviesEndpoint: Endpoint {
     
     var body: [String : String]? {
         switch self {
-        case .upcoming, .nowPlaying:
+        case .image(_):
             return nil
         }
     }

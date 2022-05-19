@@ -18,6 +18,7 @@ class MovieCell: UICollectionViewCell {
     
     lazy var title: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         return label
     }()
     
@@ -55,7 +56,7 @@ class MovieCell: UICollectionViewCell {
         }
     }
     
-    func setup(with movie: Movie) {
+    func setup(with movie: DumbMovie) {
         guard let image = movie.image, let title = movie.title else { return }
         self.imageView.image = image
         self.title.text = title

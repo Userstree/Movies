@@ -8,10 +8,15 @@
 import UIKit
 import SnapKit
 
+struct DumbMovie {
+    let title: String?
+    let image: UIImage?
+}
+
 class MainViewController: UIViewController {
     
-    private var movieSet = [Movie(title: "Horse", image: UIImage(named: "Horse")),
-                                  Movie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
+    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "Horse")),
+                            DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -26,13 +31,21 @@ class MainViewController: UIViewController {
         collection.dataSource = self
         collection.delegate = self
         collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = .clear
         return collection
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .darkVioletBackgroundColor
+        settingUpTitle()
         configureViews()
+    }
+    
+    private func settingUpTitle() {
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        title = "Movies"
     }
     
     private func configureViews() {
@@ -58,7 +71,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.identifier, for: indexPath) as! MovieCell
         cell.setup(with: movieSet[indexPath.item])
-        cell.imageView.layer.cornerRadius = 15
+        cell.imageView.layer.cornerRadius = 6
         cell.imageView.clipsToBounds = true
         return cell
     }
