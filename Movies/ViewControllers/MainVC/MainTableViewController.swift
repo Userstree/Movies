@@ -6,92 +6,102 @@
 //
 
 import UIKit
+import SnapKit
 
-class MainTableViewController: UITableViewController {
+class MainTableViewController: UIViewController {
+    
+    private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
+    
+    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "horse")),
+                            DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(CollectionCell.self, forCellReuseIdentifier: CollectionCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setTitleAndBackground()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        configureViews()
     }
 
     private func setTitleAndBackground() {
         view.backgroundColor = .darkVioletBackgroundColor
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         title = "Movies"
     }
     
-    // MARK: - Table view data source
+    private func configureViews() {
+        view.addSubview(tableView)
+        makeConstraints()
+    }
+    
+    private func makeConstraints() {
+        tableView.snp.makeConstraints{
+            $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
+        }
+    }
+}
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return movieCategory.count
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return movieCategory[section]
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+            let label = UILabel()
+            label.text = movieCategory[section]
+            label.textColor = .white
+            label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+            
+            let seeAllButton = UIButton()
+            seeAllButton.setTitle("All", for: .normal)
+            seeAllButton.setTitleColor(.orange, for: .normal)
+            
+            let stack = UIStackView()
+                .axis(.horizontal)
+                .distribution(.fillProportionally)
+            [label, seeAllButton].forEach(stack.addArrangedSubview)
+        header.addSubview(stack)
+        stack.snp.makeConstraints{
+            $0.edges.equalTo(header.snp.edges).inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        }
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        300
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CollectionCell.identifier, for: indexPath) as! CollectionCell
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        cell.configure(with: movieSet)
+        cell.backgroundColor = .clear
+        cell.delegate = self
         return cell
     }
-    */
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+extension MainTableViewController: CollectionCellDelegate {
+    func passIndexOfCollectionCell(collectionViewItemIndex: Int) {
+        let movieVC = MovieViewController(movie: movieSet[collectionViewItemIndex], genre: ["adventure, crime, mystery"])
+        self.navigationController?.pushViewController(movieVC, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

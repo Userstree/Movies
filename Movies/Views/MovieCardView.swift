@@ -15,6 +15,9 @@ class MovieCardView: UIView {
         label.backgroundColor = .orange
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
+        label.textAlignment = .center
+        label.layer.cornerRadius = 6
+        label.clipsToBounds = true
         return label
     }()
     
@@ -49,6 +52,7 @@ class MovieCardView: UIView {
         ratingLabel.snp.makeConstraints {
             $0.top.equalTo(mainImageView.snp.top).offset(15)
             $0.leading.equalTo(mainImageView.snp.leading).offset(15)
+            $0.size.equalTo(CGSize(width: 55, height: 30))
         }
     }
 }

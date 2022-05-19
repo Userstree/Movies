@@ -31,6 +31,8 @@
 		0597299028350AB0004D695D /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597298F28350AB0004D695D /* RequestError.swift */; };
 		059729922835102F004D695D /* MoviesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059729912835102F004D695D /* MoviesEndpoint.swift */; };
 		372D64901CD780ABAB4D7F8A /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0E4985F07F4979A630D0CB /* Pods_Movies.framework */; };
+		C2342A2728369C9200E073A2 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2342A2628369C9200E073A2 /* CollectionCell.swift */; };
+		C2342A292836B7E000E073A2 /* UIStackView + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2342A282836B7E000E073A2 /* UIStackView + ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		1A0E4985F07F4979A630D0CB /* Pods_Movies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		452ADC7494940FD25420BFB9 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
 		95C7B6357A2237E237726F08 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
+		C2342A2628369C9200E073A2 /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
+		C2342A282836B7E000E073A2 /* UIStackView + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				052D1EDE28366E2B007A9EF1 /* UIColor + ext.swift */,
+				C2342A282836B7E000E073A2 /* UIStackView + ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -159,8 +164,9 @@
 			isa = PBXGroup;
 			children = (
 				056D83502833A26300155B9B /* MainViewController.swift */,
-				056D83632833A80600155B9B /* MovieCell.swift */,
 				052D1EE028366F1E007A9EF1 /* MainTableViewController.swift */,
+				C2342A2628369C9200E073A2 /* CollectionCell.swift */,
+				056D83632833A80600155B9B /* MovieCell.swift */,
 			);
 			path = MainVC;
 			sourceTree = "<group>";
@@ -358,9 +364,11 @@
 				052D1EDF28366E2B007A9EF1 /* UIColor + ext.swift in Sources */,
 				056D834D2833A26300155B9B /* AppDelegate.swift in Sources */,
 				056D83642833A80600155B9B /* MovieCell.swift in Sources */,
+				C2342A292836B7E000E073A2 /* UIStackView + ext.swift in Sources */,
 				056D834F2833A26300155B9B /* SceneDelegate.swift in Sources */,
 				052D1EDB28365B50007A9EF1 /* MovieImageEndpoint.swift in Sources */,
 				0597298A28350A86004D695D /* Endpoint.swift in Sources */,
+				C2342A2728369C9200E073A2 /* CollectionCell.swift in Sources */,
 				056D83672833A89100155B9B /* Movie.swift in Sources */,
 				0597298C28350A9A004D695D /* HTTPClient.swift in Sources */,
 				0597297B2834EEA0004D695D /* MovieService.swift in Sources */,
