@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MovieViewController: UIViewController {
+class MovieDetailsViewController: UIViewController {
     
     private var imageWithLabel: MovieCardView!
     
@@ -20,12 +20,9 @@ class MovieViewController: UIViewController {
         return table
     }()
     
-    private lazy var mainStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 0
-        return stack
-    }()
+    private lazy var mainStack = UIStackView()
+        .spacing(0)
+        .axis(.vertical)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +57,7 @@ class MovieViewController: UIViewController {
     }
 }
 
-extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
+extension MovieDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }

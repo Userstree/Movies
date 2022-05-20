@@ -13,22 +13,43 @@ class MovieCell: UICollectionViewCell {
     
     lazy var imageView: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
-    lazy var title: UILabel = {
+    lazy var movieCard = MovieCardView()
+    
+    lazy var movieRating: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .orange
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        label.textAlignment = .center
+        label.layer.cornerRadius = 6
+        label.clipsToBounds = true
+        label.text = "★3.4"
         return label
     }()
     
-    private lazy var mainStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.spacing = 5
-        return stack
+    lazy var movieTitle: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        return label
     }()
+    
+    lazy var genreSubtext: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.numberOfLines = 0
+        label.textColor = .gray
+        return label
+    }()
+    
+    private lazy var mainStack = UIStackView()
+        .axis(.vertical)
+        .alignment(.leading)
+        .spacing(2)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,8 +61,9 @@ class MovieCell: UICollectionViewCell {
     }
     
     private func configureViews() {
-        [imageView, title].forEach(mainStack.addArrangedSubview)
-        contentView.addSubview(mainStack)
+        [imageView, movieTitle, genreSubtext].forEach(mainStack.addArrangedSubview)
+        [mainStack, movieRating].forEach(contentView.addSubview)
+        movieRating.bringSubviewToFront(imageView)
         makeConstraints()
     }
     
@@ -52,13 +74,24 @@ class MovieCell: UICollectionViewCell {
         }
         
         imageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: contentView.frame.width * 0.85, height: contentView.frame.height * 0.8))
+            $0.size.equalTo(CGSize(width: contentView.frame.width * 0.75, height: contentView.frame.height * 0.7))
+        }
+        
+        movieRating.snp.makeConstraints {
+            $0.leading.equalTo(imageView.snp.leading).offset(10)
+            $0.top.equalTo(imageView.snp.top).offset(10)
+            $0.size.equalTo(CGSize(width: 45, height: 25))
+        }
+        
+        movieTitle.snp.makeConstraints {
+            $0.height.equalTo(25)
         }
     }
     
     func setup(with movie: DumbMovie) {
         guard let image = movie.image, let title = movie.title else { return }
         self.imageView.image = image
-        self.title.text = title
+        self.movieTitle.text = title
+        self.genreSubtext.text = "Horror, Movie, Drama, Fantasy, Adventure"
     }
 }

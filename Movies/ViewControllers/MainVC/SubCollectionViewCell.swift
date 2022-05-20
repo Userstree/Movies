@@ -12,7 +12,7 @@ protocol CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int)
 }
 
-class CollectionCell: UITableViewCell {
+class SubCollectionViewCell: UITableViewCell {
     
     static let identifier = "CollectionCell"
     
@@ -22,7 +22,7 @@ class CollectionCell: UITableViewCell {
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: contentView.frame.width / 2, height: contentView.frame.height)
+        layout.itemSize = CGSize(width: contentView.frame.width / 2, height: contentView.frame.height - 20)
         layout.scrollDirection = .horizontal
         return layout
     }()
@@ -59,7 +59,7 @@ class CollectionCell: UITableViewCell {
     }
 }
 
-extension CollectionCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SubCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         models.count

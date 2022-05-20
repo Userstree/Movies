@@ -8,16 +8,21 @@
 import UIKit
 import SnapKit
 
+struct DumbMovie {
+    let title: String?
+    let image: UIImage?
+}
+
 class MainTableViewController: UIViewController {
     
     private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
     
-    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "horse")),
+    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "Horse")),
                             DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(CollectionCell.self, forCellReuseIdentifier: CollectionCell.identifier)
+        tableView.register(SubCollectionViewCell.self, forCellReuseIdentifier: SubCollectionViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
@@ -90,7 +95,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CollectionCell.identifier, for: indexPath) as! CollectionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SubCollectionViewCell.identifier, for: indexPath) as! SubCollectionViewCell
 
         cell.configure(with: movieSet)
         cell.backgroundColor = .clear
@@ -101,7 +106,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MainTableViewController: CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int) {
-        let movieVC = MovieViewController(movie: movieSet[collectionViewItemIndex], genre: ["adventure, crime, mystery"])
+        let movieVC = MovieDetailsViewController(movie: movieSet[collectionViewItemIndex], genre: ["adventure, crime, mystery"])
         self.navigationController?.pushViewController(movieVC, animated: true)
     }
 }
