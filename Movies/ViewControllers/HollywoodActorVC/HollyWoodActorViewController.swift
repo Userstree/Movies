@@ -23,6 +23,7 @@ class HollyWoodActorViewController: UIViewController {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -72,8 +73,7 @@ class HollyWoodActorViewController: UIViewController {
     
     lazy var horizontalSubStack = UIStackView()
         .axis(.horizontal)
-        .distribution(.fillEqually)
-        .spacing(65)
+        .spacing(10)
     
     lazy var rightVerticalSubStack = UIStackView()
         .axis(.vertical)
@@ -82,8 +82,7 @@ class HollyWoodActorViewController: UIViewController {
     
     lazy var mainVerticalStack = UIStackView()
         .axis(.vertical)
-        .alignment(.leading)
-        .spacing(5)
+        .spacing(10)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,18 +115,18 @@ class HollyWoodActorViewController: UIViewController {
     
     private func makeConstraints() {
         
-        imageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 150, height: 250))
+        mainVerticalStack.snp.makeConstraints {
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges).inset(UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
         }
         
-        mainVerticalStack.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
+        imageView.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 125, height: 200))
+//            $0.top.equalTo(self.mainVerticalStack.snp.top)
+//            $0.leading.equalTo(self.mainVerticalStack.snp.leading)
         }
         
         biographyTitleLabel.snp.makeConstraints {
             $0.height.equalTo(25)
-            $0.width.equalTo(self.view.frame.width - 5)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
         }
     }
 }
