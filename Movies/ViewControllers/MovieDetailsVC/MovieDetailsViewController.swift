@@ -9,11 +9,22 @@ import UIKit
 
 class MovieDetailsViewController: UIViewController {
     
-    var actorsModel = [HollywoodActor(image: UIImage(named: "BradPitt"), name: "BradPitt", role: "Smoking"),
+    var actorsModel = [HollywoodActor(image: UIImage(named: "BradPitt"), name: "Brad Pitt", role: "Smoking"),
                        HollywoodActor(image: UIImage(named: "DiCaprio"), name: "Leonardo DiCaprio", role: "Dancing"),
                        HollywoodActor(image: UIImage(named: "JasonMamoa"), name: "Jason Mamoa", role: "Throwing"),
                        HollywoodActor(image: UIImage(named: "TomHolland"), name: "Tom Holland", role: "Sleeping"),
                        HollywoodActor(image: UIImage(named: "RobertDowneyJr"), name: "Robert Downey Jr.", role: "Fying")]
+    
+    init(movie: DumbMovie, genre: [String]) {
+        super.init(nibName: nil, bundle: nil)
+        guard let image = movie.image else { return }
+        self.imageWithLabel = MovieCardView(.zero, of: image, with: 8.5)
+        title = movie.title
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -31,17 +42,22 @@ class MovieDetailsViewController: UIViewController {
         .text("Harry Potter")
 
     lazy var dateLabel = UILabel()
-        .font(ofSize: 14, weight: .regular)
+        .font(ofSize: 16, weight: .regular)
         .textColor(.white)
         .text("22-02-2022")
     
-    lazy var movieDescriptionLabel = UILabel()
-        .textColor(.white)
-        .numberOfLines(0)
-        .textAlignment(.left)
-        .text("apufv pafjv apjfbv pajbfvpab fhv ajfbvandvaf va ivajdnvj djdajsd oavh pbajbja bafhv jbdjva fvh")
+    lazy var movieDescriptionLabel: UITextView = {
+        $0.isEditable = false
+        $0.isScrollEnabled = true
+        
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.textColor = .gray
+        $0.text = "Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
+        $0.backgroundColor = .clear
+        return $0
+    }(UITextView())
     
-    lazy private var movieStack = UIStackView()
+    lazy private var movieVerticalStack = UIStackView()
         .axis(.vertical)
         .spacing(0)
         .alignment(.leading)
@@ -55,6 +71,7 @@ class MovieDetailsViewController: UIViewController {
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 165, height: 165)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 500
@@ -80,22 +97,19 @@ class MovieDetailsViewController: UIViewController {
         
     }
     
-    init(movie: DumbMovie, genre: [String]) {
-        super.init(nibName: nil, bundle: nil)
-        guard let image = movie.image else { return }
-        self.imageWithLabel = MovieCardView(.zero, of: image, with: 8.5)
-        title = movie.title
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     private func configureView() {
-        [imageWithLabel, movieTitleLabel, dateLabel, movieDescriptionLabel, castLalel, castCollectionView].forEach(movieStack.addArrangedSubview)
-        [movieStack].forEach(scrollView.addSubview)
+        [imageWithLabel,
+         movieTitleLabel,
+         dateLabel,
+         movieDescriptionLabel,
+         castLalel,
+         castCollectionView].forEach(movieVerticalStack.addArrangedSubview)
+        
+        [movieVerticalStack].forEach(scrollView.addSubview)
+        
         view.addSubview(scrollView)
+        
         makeConstraints()
     }
     
@@ -112,7 +126,7 @@ class MovieDetailsViewController: UIViewController {
             $0.centerX.equalTo(view.snp.centerX)
         }
         
-        movieStack.snp.makeConstraints {
+        movieVerticalStack.snp.makeConstraints {
             $0.leading.equalTo(self.view.snp.leading)
             $0.trailing.equalTo(self.view.snp.trailing)
             $0.height.equalTo(800)
@@ -120,12 +134,14 @@ class MovieDetailsViewController: UIViewController {
         
         movieTitleLabel.snp.makeConstraints {
             $0.height.equalTo(45)
-            $0.width.equalTo(self.view.snp.width)
+            $0.width.equalTo(self.view.frame.width - 5)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
         }
         
         dateLabel.snp.makeConstraints {
             $0.height.equalTo(35)
-            $0.width.equalTo(self.view.snp.width)
+            $0.width.equalTo(self.view.frame.width - 5)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
         }
         
         movieDescriptionLabel.snp.makeConstraints {
@@ -134,13 +150,14 @@ class MovieDetailsViewController: UIViewController {
         
         castLalel.snp.makeConstraints {
             $0.height.equalTo(45)
-            $0.width.equalTo(self.view.snp.width)
+            $0.width.equalTo(self.view.frame.width - 5)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
         }
         
         castCollectionView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: self.view.frame.width, height: 230))
+            $0.size.equalTo(CGSize(width: self.view.frame.width - 5, height: 180))
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
         }
-        
     }
 }
 
@@ -152,14 +169,12 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCastCell.identifier, for: indexPath) as! ActorCastCell
         cell.configure(with: actorsModel[indexPath.item])
-        cell.imgView.layer.cornerRadius = cell.imgView.frame.height / 2 
-        cell.imgView.clipsToBounds = true
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let actorVC = HollyWoodActorViewController(actor: actorsModel[indexPath.item])
+        self.navigationController?.pushViewController(actorVC, animated: true)
     }
 }
 
-extension MovieDetailsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 155, height: 165)
-    }
-}

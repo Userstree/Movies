@@ -20,34 +20,25 @@ class MovieCell: UICollectionViewCell {
     
     lazy var movieCard = MovieCardView()
     
-    lazy var movieRating: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .orange
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        label.textAlignment = .center
-        label.layer.cornerRadius = 6
-        label.clipsToBounds = true
-        label.text = "★3.4"
-        return label
-    }()
+    lazy var movieRating = UILabel()
+        .backgroundColor(.orange)
+        .textColor(.white)
+        .font(ofSize: 12, weight: .semibold)
+        .textAlignment(.center)
+        .cornerRadius(6)
+        .clipsToBounds(true)
+        .text("★3.4")
     
-    lazy var movieTitle: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        return label
-    }()
+    lazy var movieTitle = UILabel()
+        .textColor(.white)
+        .font(ofSize: 16, weight: .semibold)
     
-    lazy var genreSubtext: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.numberOfLines = 0
-        label.textColor = .gray
-        return label
-    }()
+    lazy var genreSubtext = UILabel()
+        .font(ofSize: 12, weight: .regular)
+        .numberOfLines(0)
+        .textColor(.gray) 
     
-    private lazy var mainStack = UIStackView()
+    private lazy var mainVerticalStack = UIStackView()
         .axis(.vertical)
         .alignment(.leading)
         .spacing(2)
@@ -62,14 +53,14 @@ class MovieCell: UICollectionViewCell {
     }
     
     private func configureViews() {
-        [imageView, movieTitle, genreSubtext].forEach(mainStack.addArrangedSubview)
-        [mainStack, movieRating].forEach(contentView.addSubview)
+        [imageView, movieTitle, genreSubtext].forEach(mainVerticalStack.addArrangedSubview)
+        [mainVerticalStack, movieRating].forEach(contentView.addSubview)
         movieRating.bringSubviewToFront(imageView)
         makeConstraints()
     }
     
     private func makeConstraints() {
-        mainStack.snp.makeConstraints {
+        mainVerticalStack.snp.makeConstraints {
             $0.top.leading.bottom.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
             $0.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom)
         }

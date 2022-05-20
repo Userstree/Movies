@@ -28,7 +28,7 @@ class ActorCastCell: UICollectionViewCell {
         .textColor(.white)
         .font(ofSize: 12, weight: .regular)
     
-    lazy private var mainStack = UIStackView()
+    lazy private var mainVerticalStack = UIStackView()
         .axis(.vertical)
         .alignment(.leading)
         .spacing(2)
@@ -36,17 +36,19 @@ class ActorCastCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        imgView.layer.cornerRadius = self.imgView.frame.width / 2
+        imgView.clipsToBounds = true
         configureViews()
     }
     
     private func configureViews() {
-        [imgView, nameLabel, roleLabel].forEach(mainStack.addArrangedSubview)
-        contentView.addSubview(mainStack)
+        [imgView, nameLabel, roleLabel].forEach(mainVerticalStack.addArrangedSubview)
+        contentView.addSubview(mainVerticalStack)
         makeConstraints()
     }
     
     private func makeConstraints() {
-        mainStack.snp.makeConstraints {
+        mainVerticalStack.snp.makeConstraints {
             $0.edges.equalTo(contentView.snp.edges)
         }
         

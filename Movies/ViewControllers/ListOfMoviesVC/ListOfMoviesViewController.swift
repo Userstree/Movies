@@ -12,6 +12,15 @@ class ListOfMoviesViewController: UIViewController {
     
     private var model = [DumbMovie]()
     private var genres = ["Horror", "Adventure", "Drama", "Comedy", "Thriller", "Drama", "Comedy", "Thriller"]
+    
+    init(model: [DumbMovie], genres: [String]) {
+        super.init(nibName: nil, bundle: nil)
+        self.model = model
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
  
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -38,7 +47,7 @@ class ListOfMoviesViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var mainStack = UIStackView()
+    private lazy var mainVerticalStack = UIStackView()
         .axis(.vertical)
         .spacing(5)
     
@@ -50,34 +59,25 @@ class ListOfMoviesViewController: UIViewController {
         configureViews()
     }
     
-    init(model: [DumbMovie], genres: [String]) {
-        super.init(nibName: nil, bundle: nil)
-        self.model = model
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func setNavigationTitle() {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         title = "News"
     }
 
     private func configureViews() {
-        [genreCollection, movieCardsTable].forEach(mainStack.addArrangedSubview)
-        view.addSubview(mainStack)
+        [genreCollection, movieCardsTable].forEach(mainVerticalStack.addArrangedSubview)
+        view.addSubview(mainVerticalStack)
         makeConstraints()
     }
     
     private func makeConstraints() {
-        mainStack.snp.makeConstraints {
+        mainVerticalStack.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
         }
         
         genreCollection.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: view.frame.width - 20, height: 40))
-            $0.centerX.equalTo(mainStack.snp.centerX)
+            $0.centerX.equalTo(mainVerticalStack.snp.centerX)
         }
     }
 }
