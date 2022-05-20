@@ -52,7 +52,6 @@ class ListOfMoviesViewController: UIViewController {
     
     init(model: [DumbMovie], genres: [String]) {
         super.init(nibName: nil, bundle: nil)
-//        self.genres = genres
         self.model = model
     }
     

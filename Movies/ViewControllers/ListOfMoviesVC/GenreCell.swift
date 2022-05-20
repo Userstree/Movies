@@ -12,16 +12,13 @@ class GenreCell: UICollectionViewCell {
     
     static let identifier = "GenreCell"
     
-    lazy var genreLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.layer.cornerRadius = 6
-        label.layer.borderColor = UIColor.orange.cgColor
-        label.layer.borderWidth = 1
-        return label
-    }()
+    lazy var genreLabel = UILabel()
+        .font(ofSize: 14, weight: .medium)
+        .textColor(.white)
+        .textAlignment(.center)
+        .cornerRadius(6)
+        .borderColor(.orange)
+        .borderWidth(1)
     
     override func layoutSubviews() {
         super.layoutSubviews()

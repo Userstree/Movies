@@ -17,17 +17,14 @@ class MovieCardCell: UITableViewCell {
         return imageView
     }()
     
-    lazy var movieRating: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .orange
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        label.textAlignment = .center
-        label.layer.cornerRadius = 6
-        label.clipsToBounds = true
-        label.text = "★3.4"
-        return label
-    }()
+    lazy var movieRating = UILabel()
+        .backgroundColor(.orange)
+        .textColor(.white)
+        .font(ofSize: 12, weight: .semibold)
+        .textAlignment(.center)
+        .cornerRadius(6)
+        .clipsToBounds(true) 
+        .text("★3.4")
     
     override func layoutSubviews() {
         super.layoutSubviews()
