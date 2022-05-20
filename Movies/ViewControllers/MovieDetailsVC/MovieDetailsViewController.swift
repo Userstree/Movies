@@ -56,8 +56,8 @@ class MovieDetailsViewController: UIViewController {
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 35
-        layout.minimumInteritemSpacing = 200
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 500
         return layout
     }()
     
@@ -67,12 +67,14 @@ class MovieDetailsViewController: UIViewController {
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = .clear
+        collection.showsHorizontalScrollIndicator = false
         return collection
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .darkVioletBackgroundColor
         configureView()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 150)
         
@@ -150,9 +152,8 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCastCell.identifier, for: indexPath) as! ActorCastCell
         cell.configure(with: actorsModel[indexPath.item])
-        cell.imgView.layer.cornerRadius = cell.frame.height / 2
+        cell.imgView.layer.cornerRadius = cell.imgView.frame.height / 2 
         cell.imgView.clipsToBounds = true
-        cell.backgroundColor = .gray
         return cell
     }
 }

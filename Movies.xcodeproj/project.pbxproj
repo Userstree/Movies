@@ -17,6 +17,7 @@
 		056C52C72837790E004F764E /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056C52C62837790E004F764E /* GenreCell.swift */; };
 		056C52C92837C349004F764E /* UILabel + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056C52C82837C349004F764E /* UILabel + ext.swift */; };
 		056C52CB2837C9AA004F764E /* HollywoodActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056C52CA2837C9AA004F764E /* HollywoodActor.swift */; };
+		056C52CD2837DDC3004F764E /* HollyWoodActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056C52CC2837DDC3004F764E /* HollyWoodActorViewController.swift */; };
 		056D834D2833A26300155B9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D834C2833A26300155B9B /* AppDelegate.swift */; };
 		056D834F2833A26300155B9B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D834E2833A26300155B9B /* SceneDelegate.swift */; };
 		056D83562833A26400155B9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 056D83552833A26400155B9B /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		056C52C62837790E004F764E /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
 		056C52C82837C349004F764E /* UILabel + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + ext.swift"; sourceTree = "<group>"; };
 		056C52CA2837C9AA004F764E /* HollywoodActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HollywoodActor.swift; sourceTree = "<group>"; };
+		056C52CC2837DDC3004F764E /* HollyWoodActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HollyWoodActorViewController.swift; sourceTree = "<group>"; };
 		056D83492833A26300155B9B /* Movies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		056D834C2833A26300155B9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		056D834E2833A26300155B9B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		056C52BF28374FFE004F764E /* HollywoodActorVC */ = {
 			isa = PBXGroup;
 			children = (
+				056C52CC2837DDC3004F764E /* HollyWoodActorViewController.swift */,
 			);
 			path = HollywoodActorVC;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			files = (
 				052D1ED92836550A007A9EF1 /* ImageConfigurations.swift in Sources */,
 				052D1ED728362DE4007A9EF1 /* MovieImageParametersEndpoint.swift in Sources */,
+				056C52CD2837DDC3004F764E /* HollyWoodActorViewController.swift in Sources */,
 				056C52C92837C349004F764E /* UILabel + ext.swift in Sources */,
 				052D1EDF28366E2B007A9EF1 /* UIColor + ext.swift in Sources */,
 				056D834D2833A26300155B9B /* AppDelegate.swift in Sources */,

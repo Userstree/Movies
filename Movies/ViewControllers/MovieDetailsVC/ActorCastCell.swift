@@ -49,6 +49,10 @@ class ActorCastCell: UICollectionViewCell {
         mainStack.snp.makeConstraints {
             $0.edges.equalTo(contentView.snp.edges)
         }
+        
+        imgView.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: contentView.frame.width - 40, height: contentView.frame.height - 40))
+        }
     }
     
     func configure(with model: HollywoodActor) {
