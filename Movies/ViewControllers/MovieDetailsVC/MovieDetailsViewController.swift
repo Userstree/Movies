@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class MovieDetailsViewController: UIViewController {
     

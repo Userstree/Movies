@@ -14,8 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
+        
         let rootController = MainTableViewController()
-        window.rootViewController = UINavigationController(rootViewController: rootController)
+        let navigationController = UINavigationController(rootViewController: rootController)
+        navigationController.navigationBar.tintColor = .white
+//        navigationController.preferredStatusBarStyle = 
+        
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
     }

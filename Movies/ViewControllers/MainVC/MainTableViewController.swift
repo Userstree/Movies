@@ -29,6 +29,11 @@ class MainTableViewController: UIViewController {
         return tableView
     }()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,6 +83,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
             let seeAllButton = UIButton()
             seeAllButton.setTitle("All", for: .normal)
             seeAllButton.setTitleColor(.orange, for: .normal)
+            seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
             
             let stack = UIStackView()
                 .axis(.horizontal)
@@ -101,6 +107,11 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = .clear
         cell.delegate = self
         return cell
+    }
+    
+    @objc private func seeAllButtonTapped() {
+        let listOfMoviesVC = ListOfMoviesViewController(model: movieSet, genres: movieCategory)
+        self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
     }
 }
 

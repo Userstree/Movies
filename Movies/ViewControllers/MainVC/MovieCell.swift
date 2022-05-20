@@ -9,12 +9,13 @@ import UIKit
 import SnapKit
 
 class MovieCell: UICollectionViewCell {
+    
     static let identifier = "MovieCell"
     
     lazy var imageView: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        return image
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
     
     lazy var movieCard = MovieCardView()
