@@ -46,7 +46,7 @@ class MovieCardView: UIView {
     
     private func makeConstraints() {
         mainImageView.snp.makeConstraints {
-            $0.edges.equalTo(self.snp_margins)
+            $0.edges.equalTo(self.snp.edges)
         }
         
         ratingLabel.snp.makeConstraints {
