@@ -37,7 +37,7 @@ class MovieDetailsViewController: UIViewController {
     private var imageWithLabel: MovieCardView!
     
     lazy var movieTitleLabel = UILabel()
-        .font(ofSize: 18, weight: .semibold)
+        .font(ofSize: 20, weight: .semibold)
         .textColor(.white)
         .text("Harry Potter")
 
@@ -52,7 +52,7 @@ class MovieDetailsViewController: UIViewController {
         
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
-        $0.text = "Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
+        $0.text = "Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
         $0.backgroundColor = .clear
         return $0
     }(UITextView())
@@ -127,21 +127,19 @@ class MovieDetailsViewController: UIViewController {
         }
         
         movieVerticalStack.snp.makeConstraints {
-            $0.leading.equalTo(self.view.snp.leading)
-            $0.trailing.equalTo(self.view.snp.trailing)
+            $0.leading.equalTo(self.view.snp.leading).offset(5)
+            $0.trailing.equalTo(self.view.snp.trailing).offset(-5)
             $0.height.equalTo(800)
         }
         
         movieTitleLabel.snp.makeConstraints {
-            $0.height.equalTo(45)
-            $0.width.equalTo(self.view.frame.width - 5)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.height.equalTo(40)
+            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
         }
         
         dateLabel.snp.makeConstraints {
-            $0.height.equalTo(35)
-            $0.width.equalTo(self.view.frame.width - 5)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.height.equalTo(40)
+            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
         }
         
         movieDescriptionLabel.snp.makeConstraints {
@@ -149,14 +147,14 @@ class MovieDetailsViewController: UIViewController {
         }
         
         castLalel.snp.makeConstraints {
-            $0.height.equalTo(45)
-            $0.width.equalTo(self.view.frame.width - 5)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.height.equalTo(40)
+            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
         }
         
         castCollectionView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: self.view.frame.width - 5, height: 180))
+            $0.size.equalTo(CGSize(width: self.view.frame.width - 10, height: 180))
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
         }
     }
 }

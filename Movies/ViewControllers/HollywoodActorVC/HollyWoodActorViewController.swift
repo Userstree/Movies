@@ -33,7 +33,7 @@ class HollyWoodActorViewController: UIViewController {
         .text("Name")
 
     lazy var nameLabel = UILabel()
-        .font(ofSize: 14, weight: .regular)
+        .font(ofSize: 16, weight: .regular)
         .textColor(.gray)
     
     lazy var birthdayTitleLabel = UILabel()
@@ -42,7 +42,7 @@ class HollyWoodActorViewController: UIViewController {
         .text("Birthday")
     
     lazy var birthdayLabel = UILabel()
-        .font(ofSize: 14, weight: .regular)
+        .font(ofSize: 16, weight: .regular)
         .textColor(.gray)
         .numberOfLines(2)
     
@@ -52,7 +52,7 @@ class HollyWoodActorViewController: UIViewController {
         .text("Department")
     
     lazy var departmentLabel = UILabel()
-        .font(ofSize: 14, weight: .regular)
+        .font(ofSize: 16, weight: .regular)
         .textColor(.gray)
     
     lazy var biographyTitleLabel = UILabel()
@@ -94,6 +94,8 @@ class HollyWoodActorViewController: UIViewController {
     
     private func mapModel() {
         self.imageView.image = model.image
+        self.nameLabel.text = model.name
+        self.departmentLabel.text = model.role
     }
 
     private func configureViews() {
