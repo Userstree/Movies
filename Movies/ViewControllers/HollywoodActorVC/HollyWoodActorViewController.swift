@@ -45,6 +45,7 @@ class HollyWoodActorViewController: UIViewController {
         .font(ofSize: 16, weight: .regular)
         .textColor(.gray)
         .numberOfLines(2)
+        .text("22-02-1973")
     
     lazy var departmentTitleLabel = UILabel()
         .font(ofSize: 18, weight: .bold)
