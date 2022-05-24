@@ -14,6 +14,7 @@ class ActorCastCell: UICollectionViewCell {
     lazy var imgView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -36,14 +37,13 @@ class ActorCastCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imgView.layer.cornerRadius = self.imgView.frame.width / 2
-        imgView.clipsToBounds = true
         configureViews()
     }
     
     private func configureViews() {
         [imgView, nameLabel, roleLabel].forEach(mainVerticalStack.addArrangedSubview)
         contentView.addSubview(mainVerticalStack)
+        imgView.layer.cornerRadius = self.imgView.frame.width / 2
         makeConstraints()
     }
     

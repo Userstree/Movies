@@ -124,8 +124,6 @@ class HollyWoodActorViewController: UIViewController {
         
         imageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 125, height: 200))
-//            $0.top.equalTo(self.mainVerticalStack.snp.top)
-//            $0.leading.equalTo(self.mainVerticalStack.snp.leading)
         }
         
         biographyTitleLabel.snp.makeConstraints {

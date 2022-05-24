@@ -7,11 +7,6 @@
 
 import UIKit
 
-//struct Movie {
-//    var title: String?
-//    var image: UIImage?
-//}
-
 struct Movie: Codable {
     let backdropPath: String
     let genreIDs: [Int]?
@@ -34,9 +29,20 @@ struct Movie: Codable {
     }
 }
 
-enum Rating: Double{
-    case green
-    case orange
-    case red
+enum Rating {
+    case lessThanFour
+    case lessThanSeven
+    case moreThanSeven
+    
+    var labelColor: UIColor {
+        switch self {
+        case .lessThanFour:
+            return .orange
+        case .lessThanSeven:
+            return .yellow
+        case .moreThanSeven:
+            return .green
+        }
+    }
 }
 

@@ -129,8 +129,8 @@
 		056D834B2833A26300155B9B /* Movies */ = {
 			isa = PBXGroup;
 			children = (
-				056D83652833A88400155B9B /* Models */,
 				C2342A2A283862E200E073A2 /* ViewModels */,
+				056D83652833A88400155B9B /* Models */,
 				059729792834EE27004D695D /* Networking */,
 				059729732834C409004D695D /* Views */,
 				056D83682833B16600155B9B /* Extensions */,

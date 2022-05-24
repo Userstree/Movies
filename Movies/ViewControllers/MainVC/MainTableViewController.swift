@@ -15,6 +15,8 @@ struct DumbMovie {
 
 class MainTableViewController: UIViewController {
     
+    private var movieService: MovieService = MovieService()
+    
     private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
     
     private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "Horse")),
@@ -28,15 +30,18 @@ class MainTableViewController: UIViewController {
         tableView.backgroundColor = .clear
         return tableView
     }()
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    override func loadView() {
+        super.loadView()
         navigationController?.navigationBar.barStyle = .black
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Task {
+            await movieService.getUpcomingMovies()
+        }
         setTitleAndBackground()
         configureViews()
     }
