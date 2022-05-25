@@ -121,14 +121,14 @@ class MovieDetailsViewController: UIViewController {
     
         imageWithLabel.snp.makeConstraints {
             $0.height.equalTo(view.frame.height / 2 - 40)
-            $0.leading.equalTo(self.view.snp.leading)
-            $0.trailing.equalTo(self.view.snp.trailing)
+//            $0.leading.equalTo(self.view.snp.leading)
+//            $0.trailing.equalTo(self.view.snp.trailing)
             $0.centerX.equalTo(view.snp.centerX)
         }
         
         movieVerticalStack.snp.makeConstraints {
-            $0.leading.equalTo(self.view.snp.leading).offset(5)
-            $0.trailing.equalTo(self.view.snp.trailing).offset(-5)
+//            $0.leading.equalTo(self.view.snp.leading).offset(5)
+//            $0.trailing.equalTo(self.view.snp.trailing).offset(-5)
             $0.height.equalTo(800)
         }
         

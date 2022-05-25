@@ -15,11 +15,20 @@ struct DumbMovie {
 
 class MainTableViewController: UIViewController {
     
-    private var movieService: MovieService = MovieService()
+    private let viewModel: UpcomingMovieListViewModel
+    
+    init(viewModel: UpcomingMovieListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
     
-    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "Horse")),
+    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "horse")),
                             DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
     
     lazy var tableView: UITableView = {
@@ -39,13 +48,29 @@ class MainTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Task {
-            await movieService.getUpcomingMovies()
-        }
         setTitleAndBackground()
         configureViews()
+        fetchData()
     }
 
+    private func fetchData() {
+        viewModel.fetchData()
+//        print(viewModel.movies)
+    }
+    
+    private func bindViewModelEvent() {
+        
+        viewModel.onFetchMovieSucceed = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        
+        viewModel.onFetchMovieFailure = { error in
+            print(error)
+        }
+    }
+    
     private func setTitleAndBackground() {
         view.backgroundColor = .darkVioletBackgroundColor
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]

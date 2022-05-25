@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RequestError: Error {
+enum ErrorResponse: Error {
     case decode
     case invalidURL
     case noResponse

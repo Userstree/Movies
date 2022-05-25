@@ -15,10 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let rootController = MainTableViewController()
+        let viewModel: UpcomingMovieListViewModel = UpcomingMovieListDefaultViewModel(
+            service: MovieService()
+        )
+        
+        let rootController = MainTableViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: rootController)
         navigationController.navigationBar.tintColor = .white
-//        navigationController.preferredStatusBarStyle = 
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

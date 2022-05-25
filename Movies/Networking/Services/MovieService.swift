@@ -6,30 +6,26 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MovieServiceable {
-    func getNowPlayingMovies() async -> Result<NowPlaying, RequestError>
-    func getUpcomingMovies() async -> Result<Upcoming, RequestError>
-    func getMovieImageParameters(by id: Int) async -> Result<ImageConfigurations, RequestError>
-    func fetchMovieImage() async -> Result<Data, RequestError>
+    func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse>
+    func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse>
+    func fetchMovieImage() async -> Result<UIImage, ErrorResponse>
 }
 
-struct MovieService: HTTPClient, MovieServiceable {
+struct MovieService: DataRequest, MovieServiceable, ImageRequest {
     
-    func getNowPlayingMovies() async -> Result<NowPlaying, RequestError> {
-        return await sendRequest(endpoint: MoviesEndpoint.nowPlaying, responseModel: NowPlaying.self)
+    func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse> {
+        return await sendDataRequest(endpoint: MoviesEndpoint.nowPlaying, responseModel: NowPlaying.self)
     }
     
-    func getUpcomingMovies() async -> Result<Upcoming, RequestError> {
-        return await sendRequest(endpoint: MoviesEndpoint.upcoming, responseModel: Upcoming.self)
+    func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse> {
+        return await sendDataRequest(endpoint: MoviesEndpoint.upcoming, responseModel: Upcoming.self)
     }
     
-    func getMovieImageParameters(by id: Int) async -> Result<ImageConfigurations, RequestError>{
-        return await sendRequest(endpoint: MovieImageParametersEndpoint.image(id: id), responseModel: ImageConfigurations.self)
-    }
-    
-    func fetchMovieImage() async -> Result<Data, RequestError> {
-        return await sendRequest(endpoint: MovieImageEndpoint.w500, responseModel: Data.self)
+    func fetchMovieImage() async -> Result<UIImage, ErrorResponse> {
+        return await sendImageRequest(endpoint: MovieImageEndpoint.w500)
     }
 }
 

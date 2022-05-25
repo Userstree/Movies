@@ -77,8 +77,8 @@ class ListOfMoviesViewController: UIViewController {
         
         genreCollection.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: view.frame.width - 20, height: 40))
-            $0.leading.equalTo(self.view.snp.leading).offset(10)
-            $0.trailing.equalTo(self.view.snp.trailing).offset(-10)
+//            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
+//            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-10)
             $0.centerX.equalTo(mainVerticalStack.snp.centerX)
         }
     }
