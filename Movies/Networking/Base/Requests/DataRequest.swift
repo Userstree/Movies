@@ -14,17 +14,36 @@ protocol DataRequest {
 extension DataRequest {
     func sendDataRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async -> Result<T, ErrorResponse>
     {
-        guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
-            return .failure(.invalidURL)
+        // MARK: REDO THIS
+        let urlString = (endpoint.baseURL + endpoint.path)
+        
+        guard var urlComponent = URLComponents(string: urlString) else {
+            return .failure(.unknown)
+        }
+        
+        var queryItems: [URLQueryItem] = []
+        
+        endpoint.queryItems.forEach {
+            let urlQueryItem = URLQueryItem(name: $0.key, value: $0.value)
+            urlComponent.queryItems?.append(urlQueryItem)
+            queryItems.append(urlQueryItem)
+        }
+        
+        urlComponent.queryItems = queryItems
+        
+        guard let url = urlComponent.url else {
+            return .failure(.unknown)
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.header
+        request.httpMethod = endpoint.method.rawValue
         
         if let body = endpoint.body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         }
+        
+        print("\nOur request is ", request)
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)

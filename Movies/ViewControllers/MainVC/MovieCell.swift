@@ -62,7 +62,6 @@ class MovieCell: UICollectionViewCell {
     private func makeConstraints() {
         mainVerticalStack.snp.makeConstraints {
             $0.top.leading.bottom.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-//            $0.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom)
         }
         
         imageView.snp.makeConstraints {

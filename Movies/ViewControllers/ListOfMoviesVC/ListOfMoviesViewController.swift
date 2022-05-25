@@ -65,21 +65,20 @@ class ListOfMoviesViewController: UIViewController {
     }
 
     private func configureViews() {
-        [genreCollection, movieCardsTable].forEach(mainVerticalStack.addArrangedSubview)
-        view.addSubview(mainVerticalStack)
+        [genreCollection, movieCardsTable].forEach(view.addSubview)
         makeConstraints()
     }
     
     private func makeConstraints() {
-        mainVerticalStack.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
+        genreCollection.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(40)
         }
         
-        genreCollection.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: view.frame.width - 20, height: 40))
-//            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
-//            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-10)
-            $0.centerX.equalTo(mainVerticalStack.snp.centerX)
+        movieCardsTable.snp.makeConstraints {
+            $0.top.equalTo(genreCollection.snp.bottom).offset(8)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
 }

@@ -30,11 +30,13 @@ final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
     }
     
     func fetchData() {
-        Task(priority: .high) {
-            let result = await service.getUpcomingMovies()
+        print("Before TASK\n")
+        Task {
+            let result = await service.getUpcomingMovies()            
             switch result {
             case .success(let upComing):
                 self.movies = upComing.movies
+//                print(upComing.movies)
                 self.onFetchMovieSucceed?()
             case .failure(let error):
                 self.onFetchMovieFailure?(error)

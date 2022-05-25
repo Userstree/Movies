@@ -14,6 +14,13 @@ enum MovieImageEndpoint {
 
 extension MovieImageEndpoint: Endpoint {
     
+    var queryItems: [String : String] {
+        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
+        return [
+            "api_key" : accessToken
+        ]
+    }
+    
     var baseURL: String {
         return "https://image.tmdb.org/t/p/"
     }
