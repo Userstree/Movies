@@ -42,12 +42,12 @@ extension MovieImageEndpoint: Endpoint {
     }
     
     var header: [String : String]? {
-        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
+//        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
         switch self {
         case .w500, .original:
             return [
                 "Content-Type" : "application/json;charset=utf-8",
-                "Authorization" : "Bearer \(accessToken)"
+//                "Authorization" : "Bearer \(accessToken)"
             ]
         }
     }

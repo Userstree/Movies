@@ -13,11 +13,15 @@ protocol UpcomingMovieListViewModel: AnyObject {
     var onFetchMovieSucceed: (() -> Void)? { set get }
     var onFetchMovieFailure: ((Error) -> Void)? { set get }
     func fetchData()
+    func fetchImages(posterPath: String)
+    var movieImage: UIImage? { get }
 }
 
 final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
     
     var movies: [Movie] = []
+    
+    var movieImage: UIImage?
     
     var onFetchMovieSucceed: (() -> Void)?
     
@@ -30,14 +34,25 @@ final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
     }
     
     func fetchData() {
-        print("Before TASK\n")
         Task {
             let result = await service.getUpcomingMovies()            
             switch result {
             case .success(let upComing):
                 self.movies = upComing.movies
-//                print(upComing.movies)
+                self.fetchImages(posterPath: upComing.movies[0].posterPath)
                 self.onFetchMovieSucceed?()
+            case .failure(let error):
+                self.onFetchMovieFailure?(error)
+            }
+        }
+    }
+    
+    func fetchImages(posterPath: String) {
+        Task {
+            let result = await service.fetchMovieImage(path: posterPath)
+            switch result {
+            case .success(let image):
+                self.movieImage = image
             case .failure(let error):
                 self.onFetchMovieFailure?(error)
             }

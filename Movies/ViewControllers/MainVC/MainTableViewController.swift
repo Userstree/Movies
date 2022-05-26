@@ -31,6 +31,8 @@ class MainTableViewController: UIViewController {
     private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "horse")),
                             DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
     
+    private var testImage: UIImage?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(SubCollectionViewCell.self, forCellReuseIdentifier: SubCollectionViewCell.identifier)
@@ -56,6 +58,8 @@ class MainTableViewController: UIViewController {
     private func fetchData() {
         viewModel.fetchData()
 //        print(viewModel.movies)
+        testImage = viewModel.movieImage
+        movieSet = [DumbMovie(title: "Test", image: testImage)]
     }
     
     private func bindViewModelEvent() {

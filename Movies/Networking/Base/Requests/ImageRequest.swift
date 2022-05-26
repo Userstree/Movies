@@ -8,13 +8,13 @@
 import UIKit
 
 protocol ImageRequest {
-    func sendImageRequest(endpoint: Endpoint) async -> Result<UIImage, ErrorResponse>
+    func sendImageRequest(endpoint: Endpoint, path: String) async -> Result<UIImage, ErrorResponse>
 }
 
 extension ImageRequest {
-    func sendImageRequest(endpoint: Endpoint) async -> Result<UIImage, ErrorResponse>
+    func sendImageRequest(endpoint: Endpoint, path: String) async -> Result<UIImage, ErrorResponse>
     {
-        guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
+        guard let url = URL(string: endpoint.baseURL + endpoint.path + path) else {
             return .failure(.invalidURL)
         }
         
@@ -25,6 +25,8 @@ extension ImageRequest {
         if let body = endpoint.body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         }
+        
+        print("\nOur request is ", request)
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)

@@ -11,10 +11,10 @@ import UIKit
 protocol MovieServiceable {
     func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse>
     func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse>
-    func fetchMovieImage() async -> Result<UIImage, ErrorResponse>
+    func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse>
 }
 
-struct MovieService: DataRequest, MovieServiceable, ImageRequest {
+struct MovieService: DataRequest, MovieServiceable, ImageRequest {    
     
     func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse> {
         return await sendDataRequest(endpoint: MoviesEndpoint.nowPlaying, responseModel: NowPlaying.self)
@@ -24,8 +24,8 @@ struct MovieService: DataRequest, MovieServiceable, ImageRequest {
         return await sendDataRequest(endpoint: MoviesEndpoint.upcoming, responseModel: Upcoming.self)
     }
     
-    func fetchMovieImage() async -> Result<UIImage, ErrorResponse> {
-        return await sendImageRequest(endpoint: MovieImageEndpoint.w500)
+    func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse> {
+        return await sendImageRequest(endpoint: MovieImageEndpoint.w500, path: path)
     }
 }
 
