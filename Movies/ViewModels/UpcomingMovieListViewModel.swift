@@ -8,13 +8,14 @@
 import UIKit
 
 protocol UpcomingMovieListViewModel: AnyObject {
-//    var images: [UIImage] { get set }
+//    var movieImage: UIImage? { get }
     var movies: [Movie] { set get }
+
     var onFetchMovieSucceed: (() -> Void)? { set get }
     var onFetchMovieFailure: ((Error) -> Void)? { set get }
+
     func fetchData()
-    func fetchImages(posterPath: String)
-    var movieImage: UIImage? { get }
+    func fetchImage(posterPath: String)
 }
 
 final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
@@ -39,20 +40,21 @@ final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
             switch result {
             case .success(let upComing):
                 self.movies = upComing.movies
-                self.fetchImages(posterPath: upComing.movies[0].posterPath)
+//                self.fetchImage(posterPath: upComing.movies[0].posterPath)
                 self.onFetchMovieSucceed?()
             case .failure(let error):
                 self.onFetchMovieFailure?(error)
             }
         }
     }
-    
-    func fetchImages(posterPath: String) {
+
+    func fetchImage(posterPath: String) {
         Task {
-            let result = await service.fetchMovieImage(path: posterPath)
+            let result = await ImageService.shared.fetchMovieImage(path: posterPath)
             switch result {
             case .success(let image):
                 self.movieImage = image
+                print(image)
             case .failure(let error):
                 self.onFetchMovieFailure?(error)
             }
