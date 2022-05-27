@@ -7,12 +7,20 @@
 
 import Foundation
 
-enum MoviesEndpoint {
+enum MoviesListEndpoint {
     case upcoming
     case nowPlaying
 }
 
-extension MoviesEndpoint: Endpoint {
+extension MoviesListEndpoint: Endpoint {
+    
+    var queryItems: [String : String] {
+        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
+        return [
+            "api_key" : accessToken
+        ]
+    }
+    
     var path: String {
         switch self {
         case .upcoming:
@@ -30,12 +38,10 @@ extension MoviesEndpoint: Endpoint {
     }
     
     var header: [String : String]? {
-        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
         switch self {
         case .upcoming, .nowPlaying:
             return [
-                "Content-Type" : "application/json;charset=utf-8",
-                "Authorization" : "Bearer \(accessToken)"
+                "Content-Type" : "application/json;charset=utf-8"
             ]
         }
     }

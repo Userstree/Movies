@@ -13,14 +13,14 @@ protocol MovieServiceable {
     func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse>
 }
 
-struct MovieService: DataRequest, MovieServiceable {
+struct MovieService: MovieInfoRequest, MovieServiceable {
     
     func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse> {
-        return await sendDataRequest(endpoint: MoviesEndpoint.nowPlaying, responseModel: NowPlaying.self)
+        return await sendMovieInfoRequest(endpoint: MoviesListEndpoint.nowPlaying, responseModel: NowPlaying.self)
     }
     
     func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse> {
-        return await sendDataRequest(endpoint: MoviesEndpoint.upcoming, responseModel: Upcoming.self)
+        return await sendMovieInfoRequest(endpoint: MoviesListEndpoint.upcoming, responseModel: Upcoming.self)
     }
 }
 

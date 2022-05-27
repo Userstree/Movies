@@ -4,12 +4,14 @@
 
 import UIKit
 
-protocol MovieCastServiceable {
-
-}
-
-final class MovieCastService: MovieCastServiceable {
-//    func getMovieCastById(id: Int) async -> Result<
-}
+//protocol MovieCastServiceable {
+//    func getMovieCastById(id: Int) async -> Result<Cast, ErrorResponse>
+//}
+//
+//final class MovieCastService: MovieInfoRequest, MovieCastServiceable {
+//    func getMovieCastById(id: Int) async -> Result<Cast, ErrorResponse> {
+//        return await 
+//    }
+//}
 
 

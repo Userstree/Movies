@@ -17,6 +17,6 @@ final class ImageService {
 extension ImageService: ImageServiceable, ImageRequest {
 
     func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse> {
-        return await sendImageRequest(endpoint: MovieImageEndpoint.w500, path: path)
+        return await sendImageRequest(endpoint: MovieImageEndpoint.w500, imagePath: path)
     }
 }
