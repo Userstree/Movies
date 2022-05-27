@@ -51,11 +51,4 @@ extension MovieImageEndpoint: Endpoint {
             ]
         }
     }
-    
-    var body: [String : String]? {
-        switch self {
-        case .w500, .original:
-            return nil
-        }
-    }
 }

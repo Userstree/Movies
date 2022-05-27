@@ -47,11 +47,4 @@ extension MoviesEndpoint: Endpoint {
             ]
         }
     }
-    
-    var body: [String : String]? {
-        switch self {
-        case .upcoming, .nowPlaying:
-            return nil
-        }
-    }
 }

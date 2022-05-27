@@ -2,13 +2,14 @@
 // Created by Dossymkhan Zhulamanov on 26.05.2022.
 //
 
-import Foundation
+import UIKit
 
 protocol UpcomingMovieViewModel {
     var movie: Movie { get set }
+    func fetchImage(posterPath: String, completion: @escaping  (Result<UIImage, ErrorResponse>)-> Void)
 }
 
-final class UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
+final class UpcomingMovieDefaultViewModel {
     var movie: Movie
 
     init(movie: Movie) {
@@ -16,18 +17,12 @@ final class UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
     }
 }
 
-//extension UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
-//
-//    func fetchImage(posterPath: String) {
-//        Task {
-//            let result = await ImageService.shared.fetchMovieImage(path: posterPath)
-//            switch result {
-//            case .success(let image):
-////                self.movieImage = image
-//                print(image)
-//            case .failure(let error):
-//                self.onFetchMovieFailure?(error)
-//            }
-//        }
-//    }
-//}
+extension UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
+
+    func fetchImage(posterPath: String, completion: @escaping  (Result<UIImage, ErrorResponse>) -> Void) {
+        Task {
+            let result = await ImageService.shared.fetchMovieImage(path: posterPath)
+            completion(result)
+        }
+    }
+}

@@ -120,7 +120,7 @@ class MovieDetailsViewController: UIViewController {
         self.movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
 
         let imagePath = viewModel.movie.posterPath
-        loadImage(path: imagePath) { [weak self] result in
+        viewModel.fetchImage(posterPath: imagePath) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -130,6 +130,16 @@ class MovieDetailsViewController: UIViewController {
                 print("Image for ImageDetails couldn't be loaded with ", error)
             }
         }
+//        loadImage(path: imagePath) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let image):
+//                self.imageView.image = image
+//            case .failure(let error):
+//                print("Image for ImageDetails couldn't be loaded with ", error)
+//            }
+//        }
     }
 
     private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
