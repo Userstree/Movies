@@ -10,12 +10,13 @@ import SnapKit
 
 class ListOfMoviesViewController: UIViewController {
     
-    private var model = [DumbMovie]()
+    private var viewModel: UpcomingMovieListViewModel
+    
     private var genres = ["Horror", "Adventure", "Drama", "Comedy", "Thriller", "Drama", "Comedy", "Thriller"]
     
-    init(model: [DumbMovie], genres: [String]) {
+    init(viewModel: UpcomingMovieListViewModel, genres: [String]) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.model = model
     }
     
     required init?(coder: NSCoder) {
@@ -87,12 +88,12 @@ class ListOfMoviesViewController: UIViewController {
 extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        model.count
+        viewModel.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieCardCell.identifier, for: indexPath) as! MovieCardCell
-        cell.configure(with: model[indexPath.row])
+        cell.configure(with: viewModel.movies[indexPath.row])
         cell.imgView.layer.cornerRadius = 15
         cell.imgView.clipsToBounds = true
         cell.backgroundColor = .clear
@@ -105,7 +106,8 @@ extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movieVC = MovieDetailsViewController(movie: model[indexPath.row], genre: ["adventure, crime, mystery"])
+        let detailsViewModel = UpcomingMovieDefaultViewModel.init(movie: viewModel.movies[indexPath.row])
+        let movieVC = MovieDetailsViewController(viewModel: detailsViewModel, genre: ["adventure, crime, mystery"])
         self.navigationController?.pushViewController(movieVC, animated: true)
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }

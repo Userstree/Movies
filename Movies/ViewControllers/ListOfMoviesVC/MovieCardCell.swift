@@ -49,7 +49,7 @@ class MovieCardCell: UITableViewCell {
         }
     }
 
-    func configure(with models: DumbMovie) {
-        self.imgView.image = models.image
+    func configure(with model: Movie) {
+        self.imgView.image = model.movieImage
     }
 }

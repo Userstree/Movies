@@ -28,12 +28,9 @@ class MainTableViewController: UIViewController {
     
     private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
     
-    private var movieSet = [DumbMovie(title: "Horse", image: UIImage(named: "horse")),
-                            DumbMovie(title: "Harry Potter", image: UIImage(named: "Harry Potter"))]
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(SubCollectionViewCell.self, forCellReuseIdentifier: SubCollectionViewCell.identifier)
+        tableView.register(SubCollectionViewHScrollCell.self, forCellReuseIdentifier: SubCollectionViewHScrollCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
@@ -55,7 +52,6 @@ class MainTableViewController: UIViewController {
 
     private func fetchData() {
         viewModel.fetchData()
-//        print(viewModel.movies)
     }
     
     private func bindViewModelEvent() {
@@ -131,23 +127,24 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SubCollectionViewCell.identifier, for: indexPath) as! SubCollectionViewCell
-
-        cell.configure(with: movieSet)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SubCollectionViewHScrollCell.identifier, for: indexPath) as! SubCollectionViewHScrollCell
+        
+        cell.bindWith(viewModel: viewModel)
         cell.backgroundColor = .clear
         cell.delegate = self
         return cell
     }
-    
+                 
     @objc private func seeAllButtonTapped() {
-        let listOfMoviesVC = ListOfMoviesViewController(model: movieSet, genres: movieCategory)
+        let listOfMoviesVC = ListOfMoviesViewController(viewModel: viewModel, genres: movieCategory)
         self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
     }
 }
 
 extension MainTableViewController: CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int) {
-        let movieVC = MovieDetailsViewController(movie: movieSet[collectionViewItemIndex], genre: ["adventure, crime, mystery"])
+        let detailsViewModel = UpcomingMovieDefaultViewModel.init(movie: viewModel.movies[collectionViewItemIndex])
+        let movieVC = MovieDetailsViewController(viewModel: detailsViewModel, genre: ["adventure, crime, mystery"])
         self.navigationController?.pushViewController(movieVC, animated: true)
     }
 }

@@ -14,7 +14,7 @@ struct Movie: Codable {
         if rating <= 4.0 {
             return .bad
         } else if rating > 4.0 && rating <= 7.0 {
-            return .good
+            return .normal
         } else {
             return .good
         }

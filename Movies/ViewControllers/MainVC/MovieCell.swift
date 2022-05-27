@@ -21,13 +21,11 @@ class MovieCell: UICollectionViewCell {
     lazy var movieCard = MovieCardView()
     
     lazy var movieRating = UILabel()
-        .backgroundColor(.orange)
         .textColor(.white)
         .font(ofSize: 12, weight: .semibold)
         .textAlignment(.center)
         .cornerRadius(6)
         .clipsToBounds(true)
-        .text("★3.4")
     
     lazy var movieTitle = UILabel()
         .textColor(.white)
@@ -79,10 +77,27 @@ class MovieCell: UICollectionViewCell {
         }
     }
     
-    func setup(with movie: DumbMovie) {
-        guard let image = movie.image, let title = movie.title else { return }
-        self.imageView.image = image
-        self.movieTitle.text = title
+    private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
+        Task {
+            let result = await ImageService.shared.fetchMovieImage(path: path)
+            completion(result)
+        }
+    }
+    
+    func setup(with movie: Movie) {
+        self.movieTitle.text = movie.title
+        self.movieRating.text = "★\(movie.rating)"
+        self.movieRating.backgroundColor = movie.ratingLabel.labelColor
+        loadImage(path: movie.posterPath) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let posterImage):
+                self.imageView.image = posterImage
+            case .failure(let error):
+                print("Can't set image to card with ", error)
+            }
+        }
+        
         self.genreSubtext.text = "Horror, Movie, Drama, Fantasy, Adventure"
     }
 }

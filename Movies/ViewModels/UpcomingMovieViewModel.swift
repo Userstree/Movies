@@ -6,10 +6,9 @@ import Foundation
 
 protocol UpcomingMovieViewModel {
     var movie: Movie { get set }
-//    func fetchImage(posterPath: String)
 }
 
-final class UpcomingMovieDefaultViewModel {
+final class UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
     var movie: Movie
 
     init(movie: Movie) {

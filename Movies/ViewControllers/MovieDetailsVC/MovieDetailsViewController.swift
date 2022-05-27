@@ -15,11 +15,14 @@ class MovieDetailsViewController: UIViewController {
                        HollywoodActor(image: UIImage(named: "TomHolland"), name: "Tom Holland", role: "Sleeping"),
                        HollywoodActor(image: UIImage(named: "RobertDowneyJr"), name: "Robert Downey Jr.", role: "Fying")]
     
-    init(movie: DumbMovie, genre: [String]) {
+    private var viewModel: UpcomingMovieViewModel
+    
+    init(viewModel: UpcomingMovieViewModel, genre: [String]) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        guard let image = movie.image else { return }
+        guard let image = viewModel.movie.movieImage else { return }
         self.imageWithLabel = MovieCardView(.zero, of: image, with: 8.5)
-        title = movie.title
+        title = viewModel.movie.title
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +55,7 @@ class MovieDetailsViewController: UIViewController {
         
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
-        $0.text = "Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
+        $0.text = viewModel.movie.overview//"Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
         $0.backgroundColor = .clear
         return $0
     }(UITextView())

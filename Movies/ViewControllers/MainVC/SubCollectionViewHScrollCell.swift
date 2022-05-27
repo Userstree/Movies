@@ -12,11 +12,11 @@ protocol CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int)
 }
 
-class SubCollectionViewCell: UITableViewCell {
+class SubCollectionViewHScrollCell: UITableViewCell {
     
-    static let identifier = "CollectionCell"
+    static let identifier = "SubCollectionViewHScrollCell"
     
-    var models = [DumbMovie]()
+    var models = [Movie]()
     
     var delegate: CollectionCellDelegate?
     
@@ -52,14 +52,14 @@ class SubCollectionViewCell: UITableViewCell {
             $0.edges.equalTo(contentView.safeAreaLayoutGuide.snp.margins)
         }
     }
-
-    func configure(with models: [DumbMovie]) {
-        self.models = models
+    
+    func bindWith(viewModel: UpcomingMovieListViewModel) {
+        self.models = viewModel.movies
         collectionView.reloadData()
     }
 }
 
-extension SubCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SubCollectionViewHScrollCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         models.count
@@ -67,7 +67,9 @@ extension SubCollectionViewCell: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.identifier, for: indexPath) as! MovieCell
+        
         cell.setup(with: models[indexPath.item])
+        
         cell.imageView.layer.cornerRadius = 6
         cell.imageView.clipsToBounds = true
         return cell
