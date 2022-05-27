@@ -18,8 +18,6 @@ class MovieCell: UICollectionViewCell {
         return imageView
     }()
     
-    lazy var movieCard = MovieCardView()
-    
     lazy var movieRating = UILabel()
         .textColor(.white)
         .font(ofSize: 12, weight: .semibold)
@@ -83,11 +81,13 @@ class MovieCell: UICollectionViewCell {
             completion(result)
         }
     }
-    
+
     func setup(with movie: Movie) {
         self.movieTitle.text = movie.title
         self.movieRating.text = "★\(movie.rating)"
-        self.movieRating.backgroundColor = movie.ratingLabel.labelColor
+        self.movieRating.backgroundColor = movie.ratingLabelColor.labelColor
+        self.genreSubtext.text = "Horror, Movie, Drama, Fantasy, Adventure"
+
         loadImage(path: movie.posterPath) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -97,7 +97,5 @@ class MovieCell: UICollectionViewCell {
                 print("Can't set image to card with ", error)
             }
         }
-        
-        self.genreSubtext.text = "Horror, Movie, Drama, Fantasy, Adventure"
     }
 }

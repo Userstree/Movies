@@ -9,8 +9,7 @@ import UIKit
 
 struct Movie: Codable {
 
-    var movieImage: UIImage?
-    var ratingLabel: Rating {
+    var ratingLabelColor: Rating {
         if rating <= 4.0 {
             return .bad
         } else if rating > 4.0 && rating <= 7.0 {
@@ -26,6 +25,7 @@ struct Movie: Codable {
     let posterPath: String
     let title: String
     let rating: Double
+    let releaseDate: String
     
     enum CodingKeys: String, CodingKey {
         case overview
@@ -34,6 +34,7 @@ struct Movie: Codable {
         case genreIDs = "genre_ids"
         case posterPath = "poster_path"
         case rating = "vote_average"
+        case releaseDate = "release_date"
     }
 }
 

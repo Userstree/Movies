@@ -34,6 +34,7 @@ extension DataRequest {
         guard let url = urlComponent.url else {
             return .failure(.unknown)
         }
+
         
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = endpoint.header
@@ -42,7 +43,7 @@ extension DataRequest {
         if let body = endpoint.body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         }
-        
+
         do {
             let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
             

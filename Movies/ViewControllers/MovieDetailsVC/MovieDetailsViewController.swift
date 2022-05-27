@@ -20,9 +20,6 @@ class MovieDetailsViewController: UIViewController {
     init(viewModel: UpcomingMovieViewModel, genre: [String]) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        guard let image = viewModel.movie.movieImage else { return }
-        self.imageWithLabel = MovieCardView(.zero, of: image, with: 8.5)
-        title = viewModel.movie.title
     }
     
     required init?(coder: NSCoder) {
@@ -37,12 +34,23 @@ class MovieDetailsViewController: UIViewController {
     }()
     
     //>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
-    private var imageWithLabel: MovieCardView!
-    
+
+    private var imageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+
+    private lazy var movieRatingLabel = UILabel()
+            .backgroundColor(.orange)
+            .textColor(.white)
+            .font(ofSize: 14, weight: .semibold)
+            .textAlignment(.center)
+            .cornerRadius(12)
+            .clipsToBounds(true)
+
     lazy var movieTitleLabel = UILabel()
         .font(ofSize: 20, weight: .semibold)
         .textColor(.white)
-        .text("Harry Potter")
 
     lazy var dateLabel = UILabel()
         .font(ofSize: 16, weight: .regular)
@@ -55,7 +63,7 @@ class MovieDetailsViewController: UIViewController {
         
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
-        $0.text = viewModel.movie.overview//"Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
+        $0.text = viewModel.movie.overview
         $0.backgroundColor = .clear
         return $0
     }(UITextView())
@@ -97,19 +105,50 @@ class MovieDetailsViewController: UIViewController {
         view.backgroundColor = .darkVioletBackgroundColor
         configureView()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 150)
-        
+        loadImageAndLabel()
+        setData()
     }
-    
+
+    private func setData() {
+        title = viewModel.movie.title
+        self.movieTitleLabel.text = viewModel.movie.title
+        self.dateLabel.text = viewModel.movie.releaseDate
+    }
+
+    private func loadImageAndLabel() {
+        self.movieRatingLabel.text = "★\(viewModel.movie.rating)"
+        self.movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
+
+        let imagePath = viewModel.movie.posterPath
+        loadImage(path: imagePath) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let image):
+                self.imageView.image = image
+            case .failure(let error):
+                print("Image for ImageDetails couldn't be loaded with ", error)
+            }
+        }
+    }
+
+    private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
+        Task {
+            let result = await ImageService.shared.fetchMovieImage(path: path)
+            completion(result)
+        }
+    }
+
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     private func configureView() {
-        [imageWithLabel,
+        [imageView,
          movieTitleLabel,
          dateLabel,
          movieDescriptionLabel,
          castLalel,
          castCollectionView].forEach(movieVerticalStack.addArrangedSubview)
         
-        [movieVerticalStack].forEach(scrollView.addSubview)
+        [movieVerticalStack, movieRatingLabel].forEach(scrollView.addSubview)
         
         view.addSubview(scrollView)
         
@@ -122,16 +161,19 @@ class MovieDetailsViewController: UIViewController {
             $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
         }
     
-        imageWithLabel.snp.makeConstraints {
+        imageView.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
             $0.height.equalTo(view.frame.height / 2 - 40)
-//            $0.leading.equalTo(self.view.snp.leading)
-//            $0.trailing.equalTo(self.view.snp.trailing)
             $0.centerX.equalTo(view.snp.centerX)
         }
-        
+
+        movieRatingLabel.snp.makeConstraints {
+            $0.leading.equalTo(imageView.snp.leading).offset(20)
+            $0.top.equalTo(imageView.snp.top).offset(20)
+            $0.size.equalTo(CGSize(width: 60, height: 25))
+        }
+
         movieVerticalStack.snp.makeConstraints {
-//            $0.leading.equalTo(self.view.snp.leading).offset(5)
-//            $0.trailing.equalTo(self.view.snp.trailing).offset(-5)
             $0.height.equalTo(800)
         }
         

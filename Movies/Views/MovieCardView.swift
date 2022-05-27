@@ -10,9 +10,12 @@ import SnapKit
 
 class MovieCardView: UIView {
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
     var ratingLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
         label.textAlignment = .center
@@ -22,10 +25,6 @@ class MovieCardView: UIView {
     }()
     
     var mainImageView = UIImageView()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
     
     init(_ frame: CGRect, of image: UIImage, with rating: Double) {
         self.mainImageView.image = image

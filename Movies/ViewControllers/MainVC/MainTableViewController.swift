@@ -48,6 +48,7 @@ class MainTableViewController: UIViewController {
         setTitleAndBackground()
         configureViews()
         fetchData()
+        bindViewModelEvent()
     }
 
     private func fetchData() {
