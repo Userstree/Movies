@@ -37,5 +37,3 @@ struct Movie: Codable {
         case releaseDate = "release_date"
     }
 }
-
-

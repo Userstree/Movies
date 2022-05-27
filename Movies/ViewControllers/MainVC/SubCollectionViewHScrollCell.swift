@@ -17,7 +17,7 @@ class SubCollectionViewHScrollCell: UITableViewCell {
     static let identifier = "SubCollectionViewHScrollCell"
     
     var models = [Movie]()
-    
+
     var delegate: CollectionCellDelegate?
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
