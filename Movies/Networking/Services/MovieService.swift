@@ -11,6 +11,7 @@ import UIKit
 protocol MovieServiceable {
     func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse>
     func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse>
+    func getMovieCast(by movieID: Int) async -> Result<Cast, ErrorResponse>
 }
 
 struct MovieService: MovieInfoRequest, MovieServiceable {
@@ -21,6 +22,10 @@ struct MovieService: MovieInfoRequest, MovieServiceable {
     
     func getUpcomingMovies() async -> Result<Upcoming, ErrorResponse> {
         return await sendMovieInfoRequest(endpoint: MoviesListEndpoint.upcoming, responseModel: Upcoming.self)
+    }
+    
+    func getMovieCast(by movieID: Int) async -> Result<Cast, ErrorResponse> {
+        return await sendMovieInfoRequest(endpoint: CastEndpoint.movie, forMovieWithID: movieID, responseModel: Cast.self)
     }
 }
 
