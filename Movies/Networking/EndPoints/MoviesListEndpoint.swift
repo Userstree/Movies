@@ -10,6 +10,7 @@ import Foundation
 enum MoviesListEndpoint {
     case upcoming
     case nowPlaying
+    
 }
 
 extension MoviesListEndpoint: Endpoint {

@@ -56,7 +56,9 @@ class MovieCardCell: UITableViewCell {
             guard let self = self else { return }
             switch result {
             case .success(let image):
-                self.imgView.image = image
+                DispatchQueue.main.async {
+                    self.imgView.image = image
+                }
             case .failure(let error):
                 print(error)
             }

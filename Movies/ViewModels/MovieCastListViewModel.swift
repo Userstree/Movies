@@ -12,5 +12,5 @@ protocol MovieCastListViewModel {
 }
 
 final class MovieCastListDefaultViewModel: MovieCastListViewModel {
-    var castList: [Cast]
+    var castList: [Cast] = []
 }

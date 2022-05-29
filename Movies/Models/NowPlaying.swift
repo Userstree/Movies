@@ -8,11 +8,11 @@
 import Foundation
 
 struct NowPlaying: Codable {
-    var totalResults: Int
-    var totalPages: Int
-    var dates: [String : String]
-    var results: [Movie]
-    var page: Int
+    let totalResults: Int
+    let totalPages: Int
+    let dates: [String : String]
+    let results: [Movie]
+    let page: Int
     
     enum CodingKeys: String, CodingKey {
         case page

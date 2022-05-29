@@ -25,4 +25,11 @@ extension UpcomingMovieDefaultViewModel: UpcomingMovieViewModel {
             completion(result)
         }
     }
+    
+    func getCast(completion: @escaping (Result<Cast, ErrorResponse>) -> Void) {
+        Task {
+            let result = await MovieCastService.shared.getMovieCast(movieID: movie.id)
+            completion(result)
+        }
+    }
 }

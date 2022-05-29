@@ -58,9 +58,7 @@ class MainTableViewController: UIViewController {
     private func bindViewModelEvent() {
         
         viewModel.onFetchMovieSucceed = { [weak self] in
-            DispatchQueue.main.async {
                 self?.tableView.reloadData()
-            }
         }
         
         viewModel.onFetchMovieFailure = { error in

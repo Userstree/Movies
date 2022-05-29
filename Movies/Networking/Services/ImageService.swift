@@ -8,7 +8,7 @@ protocol ImageServiceable {
     func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse>
 }
 
-final class ImageService {
+struct ImageService {
     static let shared = ImageService()
 
     init() {}

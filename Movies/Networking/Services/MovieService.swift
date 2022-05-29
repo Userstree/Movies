@@ -14,7 +14,7 @@ protocol MovieServiceable {
     func getMovieCast(by movieID: Int) async -> Result<Cast, ErrorResponse>
 }
 
-struct MovieService: MovieInfoRequest, MovieServiceable {
+final class MovieService: MovieInfoRequest, MovieServiceable {
     
     func getNowPlayingMovies() async -> Result<NowPlaying, ErrorResponse> {
         return await sendMovieInfoRequest(endpoint: MoviesListEndpoint.nowPlaying, responseModel: NowPlaying.self)

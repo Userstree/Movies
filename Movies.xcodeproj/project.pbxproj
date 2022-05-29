@@ -38,6 +38,7 @@
 		C2D7373C2841579800D292E4 /* CastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7373B2841579800D292E4 /* CastRequest.swift */; };
 		C2D7373E28415F5800D292E4 /* CastEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7373D28415F5800D292E4 /* CastEndpoint.swift */; };
 		C2D737402841C86A00D292E4 /* MovieCastListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7373F2841C86A00D292E4 /* MovieCastListViewModel.swift */; };
+		C2D737432843F05400D292E4 /* MoviesByCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D737422843F05400D292E4 /* MoviesByCategoryViewModel.swift */; };
 		F88433233371B0F702A14602 /* MovieCastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843A607829CB97E5CBA559 /* MovieCastService.swift */; };
 		F88435C2883D58D93C0ADFD7 /* HollywoodActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88437E72C1BF2ABAF79855E /* HollywoodActor.swift */; };
 		F88437C9D44AE3699BDA750A /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843E546A29E5BF026B4066 /* Rating.swift */; };
@@ -83,6 +84,7 @@
 		C2D7373B2841579800D292E4 /* CastRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastRequest.swift; sourceTree = "<group>"; };
 		C2D7373D28415F5800D292E4 /* CastEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastEndpoint.swift; sourceTree = "<group>"; };
 		C2D7373F2841C86A00D292E4 /* MovieCastListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastListViewModel.swift; sourceTree = "<group>"; };
+		C2D737422843F05400D292E4 /* MoviesByCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesByCategoryViewModel.swift; sourceTree = "<group>"; };
 		F884306CDD71621D453B75EB /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		F88432E8DAB487E1A6EA2BB2 /* Cast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		F88437E72C1BF2ABAF79855E /* HollywoodActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HollywoodActor.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				05294A93283E05EC003B7959 /* UpcomingMovieListViewModel.swift */,
 				F8843F5508A03774EA553A52 /* UpcomingMovieViewModel.swift */,
 				C2D7373F2841C86A00D292E4 /* MovieCastListViewModel.swift */,
+				C2D737422843F05400D292E4 /* MoviesByCategoryViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				0597298E28350AA5004D695D /* RequestMethod.swift in Sources */,
 				052D1EE128366F1E007A9EF1 /* MainTableViewController.swift in Sources */,
 				056C52C528375D48004F764E /* MovieCardCell.swift in Sources */,
+				C2D737432843F05400D292E4 /* MoviesByCategoryViewModel.swift in Sources */,
 				0597299028350AB0004D695D /* ErrorResponse.swift in Sources */,
 				0587CC68283618010055F019 /* Upcoming.swift in Sources */,
 				0587CC66283617E70055F019 /* NowPlaying.swift in Sources */,

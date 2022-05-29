@@ -5,17 +5,17 @@
 import UIKit
 
 protocol MovieCastServiceable {
-    func getMovieCastById(id: Int) async -> Result<Cast, ErrorResponse>
+    func getMovieCast(movieID: Int) async -> Result<Cast, ErrorResponse>
 }
 
 final class MovieCastService: MovieInfoRequest, MovieCastServiceable {
     static let shared = MovieCastService()
-    
+
     init() {}
 }
 
 extension MovieCastService {
-//    func getMovieCastById(id: Int) async -> Result<Cast, ErrorResponse> {
-//        return await
-//    }
+    func getMovieCast(movieID: Int) async -> Result<Cast, ErrorResponse> {
+        return await sendMovieInfoRequest(endpoint: CastEndpoint.movie, forMovieWithID: movieID, responseModel: Cast.self)
+    }
 }

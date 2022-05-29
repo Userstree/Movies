@@ -92,7 +92,9 @@ class MovieCell: UICollectionViewCell {
             guard let self = self else { return }
             switch result {
             case .success(let posterImage):
-                self.imageView.image = posterImage
+                DispatchQueue.main.async {
+                    self.imageView.image = posterImage
+                }
             case .failure(let error):
                 print("Can't set image to card with ", error)
             }

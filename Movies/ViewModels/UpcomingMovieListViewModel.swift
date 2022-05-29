@@ -35,8 +35,10 @@ final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
             let result = await service.getUpcomingMovies()            
             switch result {
             case .success(let upComing):
-                self.movies = upComing.movies
-                self.onFetchMovieSucceed?()
+                DispatchQueue.main.async {
+                    self.movies = upComing.movies
+                    self.onFetchMovieSucceed?()
+                }
             case .failure(let error):
                 self.onFetchMovieFailure?(error)
             }
