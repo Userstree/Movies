@@ -9,12 +9,6 @@ import UIKit
 
 class MovieDetailsViewController: UIViewController {
 
-    var actorsModel = [HollywoodActor(image: UIImage(named: "BradPitt"), name: "Brad Pitt", role: "Smoking"),
-                       HollywoodActor(image: UIImage(named: "DiCaprio"), name: "Leonardo DiCaprio", role: "Dancing"),
-                       HollywoodActor(image: UIImage(named: "JasonMamoa"), name: "Jason Mamoa", role: "Throwing"),
-                       HollywoodActor(image: UIImage(named: "TomHolland"), name: "Tom Holland", role: "Sleeping"),
-                       HollywoodActor(image: UIImage(named: "RobertDowneyJr"), name: "Robert Downey Jr.", role: "Fying")]
-
     private var viewModel: UpcomingMovieViewModel
 
     init(viewModel: UpcomingMovieViewModel, genre: [String]) {
@@ -107,8 +101,19 @@ class MovieDetailsViewController: UIViewController {
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 150)
         loadImageAndLabel()
         setData()
+        bindToViewModelChanges()
     }
 
+    private func bindToViewModelChanges() {
+        viewModel.onFetchMovieSucceed = { [weak self] in
+            self?.castCollectionView.reloadData()
+        }
+        
+        viewModel.onFetchMovieFailure = { error in
+            print(error)
+        }
+    }
+    
     private func setData() {
         title = viewModel.movie.title
         self.movieTitleLabel.text = viewModel.movie.title
@@ -120,7 +125,8 @@ class MovieDetailsViewController: UIViewController {
         self.movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
 
         let imagePath = viewModel.movie.posterPath
-
+        
+        
         viewModel.fetchImage(posterPath: imagePath) { [weak self] result in
             guard let self = self else {
                 return
@@ -133,17 +139,6 @@ class MovieDetailsViewController: UIViewController {
                 print("Image for ImageDetails couldn't be loaded with ", error)
             }
         }
-
-//        viewModel.getCast { result in
-//            switch result {
-//            case .success(let cast):
-//                DispatchQueue.main.async {
-//                    print(cast.cast[0].name)
-//                }
-//            case .failure(let error):
-//                print("error is ", error)
-//            }
-//        }
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -213,17 +208,18 @@ class MovieDetailsViewController: UIViewController {
 
 extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        actorsModel.count
+        viewModel.castOfActors.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCastCell.identifier, for: indexPath) as! ActorCastCell
-        cell.configure(with: actorsModel[indexPath.item])
+        
+        cell.configure(with: viewModel.castOfActors[indexPath.item])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let actorVC = HollyWoodActorViewController(actor: actorsModel[indexPath.item])
+        let actorVC = HollyWoodActorViewController(actor: viewModel.castOfActors[indexPath.item])
         self.navigationController?.pushViewController(actorVC, animated: true)
     }
 }

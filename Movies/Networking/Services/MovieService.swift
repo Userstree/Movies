@@ -25,7 +25,7 @@ final class MovieService: MovieInfoRequest, MovieServiceable {
     }
     
     func getMovieCast(by movieID: Int) async -> Result<CastList, ErrorResponse> {
-        return await sendMovieInfoRequest(endpoint: CastEndpoint.movie, forMovieWithID: movieID, responseModel: CastList.self)
+        return await sendMovieInfoRequest(endpoint: MovieCastListEndpoint.movie, forMovieWithID: movieID, responseModel: CastList.self)
     }
 }
 

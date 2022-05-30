@@ -137,7 +137,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MainTableViewController: CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int) {
-        let detailsViewModel = UpcomingMovieDefaultViewModel.init(movie: viewModel.movies[collectionViewItemIndex])
+        let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.movies[collectionViewItemIndex])
         let movieVC = MovieDetailsViewController(viewModel: detailsViewModel, genre: ["adventure, crime, mystery"])
         self.navigationController?.pushViewController(movieVC, animated: true)
     }

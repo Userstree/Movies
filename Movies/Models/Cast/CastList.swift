@@ -6,7 +6,7 @@ import Foundation
 
 struct CastList: Codable {
     let id: Int
-    let cast: [Cast]
+    let cast: [ActorCast]
 
 //    enum CodingKeys: String, CodingKey {
 //        case id

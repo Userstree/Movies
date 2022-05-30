@@ -37,13 +37,9 @@ extension MovieInfoRequest {
             urlComponents.path.append("/credits")
         }
 
-        guard var url = urlComponents.url else {
+        guard let url = urlComponents.url else {
             return .failure(.unknown)
         }
-
-//        var urlStr = url.absoluteString
-//        urlStr.append(endpoint.appendToRequest + "credits")
-//        url = URL(string: urlStr)!
 
         print("url is ", url)
 

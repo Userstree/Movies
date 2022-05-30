@@ -9,9 +9,9 @@ import UIKit
 
 class HollyWoodActorViewController: UIViewController {
     
-    private var model: HollywoodActor
+    private var model: ActorCast
     
-    init(actor: HollywoodActor) {
+    init(actor: ActorCast) {
         self.model = actor
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +67,6 @@ class HollyWoodActorViewController: UIViewController {
         
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
-        $0.text = "Born on November 11, 1974, in Los Angeles, California, Leonardo Wilhelm DiCaprio is the only child of Irmelin and George DiCaprio. His parents divorced when he was still a toddler. DiCaprio was mostly raised by his mother, a legal secretary born in Germany."
         $0.backgroundColor = .clear
         return $0
     }(UITextView())
@@ -94,9 +93,9 @@ class HollyWoodActorViewController: UIViewController {
     }
     
     private func mapModel() {
-        self.imageView.image = model.image
         self.nameLabel.text = model.name
-        self.departmentLabel.text = model.role
+        self.departmentLabel.text = model.knownFor
+        
     }
 
     private func configureViews() {

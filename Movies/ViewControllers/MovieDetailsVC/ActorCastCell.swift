@@ -57,10 +57,28 @@ class ActorCastCell: UICollectionViewCell {
         }
     }
     
-    func configure(with model: HollywoodActor) {
-        guard let image = model.image else { return }
-        self.imgView.image = image
+    func configure(with model: ActorCast) {
         self.nameLabel.text = model.name
-        self.roleLabel.text = model.role
+        self.roleLabel.text = model.knownFor
+        
+        guard let profileImagePath = model.profileImage else { return }
+        loadImage(path: profileImagePath) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.imgView.image = image
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
+        Task {
+            let result = await ImageService.shared.fetchImage(path: path)
+            completion(result)
+        }
     }
 }

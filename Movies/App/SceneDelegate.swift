@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let viewModel: UpcomingMovieListViewModel = UpcomingMovieListDefaultViewModel(
+        let viewModel: UpcomingMovieListViewModel = DefaultUpcomingMovieListViewModel(
             service: MovieService()
         )
         

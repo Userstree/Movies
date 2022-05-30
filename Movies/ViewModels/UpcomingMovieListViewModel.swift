@@ -16,7 +16,7 @@ protocol UpcomingMovieListViewModel: AnyObject {
     func fetchData()
 }
 
-final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
+final class DefaultUpcomingMovieListViewModel {
     
     var movies: [Movie] = []
     
@@ -29,10 +29,13 @@ final class UpcomingMovieListDefaultViewModel: UpcomingMovieListViewModel {
     init(service: MovieServiceable) {
         self.service = service
     }
+}
+
+extension DefaultUpcomingMovieListViewModel: UpcomingMovieListViewModel {
     
     func fetchData() {
         Task {
-            let result = await service.getUpcomingMovies()            
+            let result = await service.getUpcomingMovies()
             switch result {
             case .success(let upComing):
                 DispatchQueue.main.async {

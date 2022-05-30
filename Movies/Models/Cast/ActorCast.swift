@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Cast: Codable {
+struct ActorCast: Codable {
     let id: Int
     let knownFor: String
     let profileImage: String?

@@ -77,7 +77,7 @@ class MovieCell: UICollectionViewCell {
     
     private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
         Task {
-            let result = await ImageService.shared.fetchMovieImage(path: path)
+            let result = await ImageService.shared.fetchImage(path: path)
             completion(result)
         }
     }

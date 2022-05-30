@@ -5,7 +5,7 @@
 import UIKit
 
 protocol ImageServiceable {
-    func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse>
+    func fetchImage(path: String) async -> Result<UIImage, ErrorResponse>
 }
 
 struct ImageService {
@@ -16,7 +16,7 @@ struct ImageService {
 
 extension ImageService: ImageServiceable, ImageRequest {
 
-    func fetchMovieImage(path: String) async -> Result<UIImage, ErrorResponse> {
+    func fetchImage(path: String) async -> Result<UIImage, ErrorResponse> {
         return await sendImageRequest(endpoint: MovieImageEndpoint.w500, imagePath: path)
     }
 }

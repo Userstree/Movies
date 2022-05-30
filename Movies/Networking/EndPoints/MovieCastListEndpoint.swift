@@ -7,11 +7,11 @@
 
 import UIKit
 
-enum CastEndpoint {
+enum MovieCastListEndpoint {
     case movie
 }
 
-extension CastEndpoint: Endpoint {
+extension MovieCastListEndpoint: Endpoint {
     
     var path: String {
         switch self {
