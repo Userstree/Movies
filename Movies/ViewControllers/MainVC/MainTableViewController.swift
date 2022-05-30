@@ -8,11 +8,6 @@
 import UIKit
 import SnapKit
 
-struct DumbMovie {
-    let title: String?
-    let image: UIImage?
-}
-
 class MainTableViewController: UIViewController {
     
     private let viewModel: UpcomingMovieListViewModel

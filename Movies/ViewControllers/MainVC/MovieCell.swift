@@ -96,7 +96,9 @@ class MovieCell: UICollectionViewCell {
                     self.imageView.image = posterImage
                 }
             case .failure(let error):
-                print("Can't set image to card with ", error)
+                DispatchQueue.main.async {
+                    print("Can't set image to card with ", error)
+                }
             }
         }
     }

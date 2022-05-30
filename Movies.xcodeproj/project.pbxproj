@@ -45,6 +45,7 @@
 		F88438537F5BB80377CCA20C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884306CDD71621D453B75EB /* Movie.swift */; };
 		F8843921A39E26175E0A6994 /* UpcomingMovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843F5508A03774EA553A52 /* UpcomingMovieViewModel.swift */; };
 		F8843D72E989DA56EDD9CDA0 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843BC75D1C726F9890A6A2 /* ImageService.swift */; };
+		F8843ED8A1465E2C2C7255F3 /* CastList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88430158932F438665B053A /* CastList.swift */; };
 		F8843EF63237797A11CDC5D1 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432E8DAB487E1A6EA2BB2 /* Cast.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		C2D7373D28415F5800D292E4 /* CastEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastEndpoint.swift; sourceTree = "<group>"; };
 		C2D7373F2841C86A00D292E4 /* MovieCastListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastListViewModel.swift; sourceTree = "<group>"; };
 		C2D737422843F05400D292E4 /* MoviesByCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesByCategoryViewModel.swift; sourceTree = "<group>"; };
+		F88430158932F438665B053A /* CastList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastList.swift; sourceTree = "<group>"; };
 		F884306CDD71621D453B75EB /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		F88432E8DAB487E1A6EA2BB2 /* Cast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		F88437E72C1BF2ABAF79855E /* HollywoodActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HollywoodActor.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 			children = (
 				F88432E8DAB487E1A6EA2BB2 /* Cast.swift */,
 				F88437E72C1BF2ABAF79855E /* HollywoodActor.swift */,
+				F88430158932F438665B053A /* CastList.swift */,
 			);
 			path = Cast;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				F88437C9D44AE3699BDA750A /* Rating.swift in Sources */,
 				F8843EF63237797A11CDC5D1 /* Cast.swift in Sources */,
 				F88435C2883D58D93C0ADFD7 /* HollywoodActor.swift in Sources */,
+				F8843ED8A1465E2C2C7255F3 /* CastList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,7 +5,7 @@
 import UIKit
 
 protocol MovieCastServiceable {
-    func getMovieCast(movieID: Int) async -> Result<Cast, ErrorResponse>
+    func getMovieCast(movieID: Int) async -> Result<CastList, ErrorResponse>
 }
 
 final class MovieCastService: MovieInfoRequest, MovieCastServiceable {
@@ -15,7 +15,7 @@ final class MovieCastService: MovieInfoRequest, MovieCastServiceable {
 }
 
 extension MovieCastService {
-    func getMovieCast(movieID: Int) async -> Result<Cast, ErrorResponse> {
-        return await sendMovieInfoRequest(endpoint: CastEndpoint.movie, forMovieWithID: movieID, responseModel: Cast.self)
+    func getMovieCast(movieID: Int) async -> Result<CastList, ErrorResponse> {
+        return await sendMovieInfoRequest(endpoint: CastEndpoint.movie, forMovieWithID: movieID, responseModel: CastList.self)
     }
 }

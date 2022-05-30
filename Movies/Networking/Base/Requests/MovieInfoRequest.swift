@@ -32,15 +32,21 @@ extension MovieInfoRequest {
         }
         
         urlComponents.queryItems = queryItems
-        
+
         if forMovieWithID != nil {
-            urlComponents.path.append(endpoint.appendToRequest + "credits")
+            urlComponents.path.append("/credits")
         }
-        
-        guard let url = urlComponents.url else {
+
+        guard var url = urlComponents.url else {
             return .failure(.unknown)
         }
-        print(url.absoluteString)
+
+//        var urlStr = url.absoluteString
+//        urlStr.append(endpoint.appendToRequest + "credits")
+//        url = URL(string: urlStr)!
+
+        print("url is ", url)
+
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = endpoint.header
         request.httpMethod = endpoint.method.rawValue
@@ -54,9 +60,12 @@ extension MovieInfoRequest {
             
             switch response.statusCode {
             case 200...299:
+
                 guard let decodedResponse = try? JSONDecoder().decode(responseModel, from: data) else {
+                    print("Error happened during decoding")
                     return .failure(.decode)
                 }
+
                 return .success(decodedResponse)
             case 401:
                 return .failure(.unauthorized)
