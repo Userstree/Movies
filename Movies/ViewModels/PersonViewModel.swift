@@ -5,23 +5,29 @@
 //  Created by Dossymkhan Zhulamanov on 28.05.2022.
 //
 
-import Foundation
-
-protocol PersonViewModel {
-    var person: Person { get set }
-}
+import UIKit
 
 typealias SuccessCallback = () -> Void
 typealias FailureCallback = (Error) -> Void
 
-final class DefaultPersonViewModel {
-    var person = Person()
-    var personId: Int
+protocol PersonViewModel {
+    var person: Person? { get set }
+    var personID: Int { get set }
+    var onFetchPersonSucceed: SuccessCallback? { get set }
+    var onFetchPersonFailure: FailureCallback? { get set }
+    var profileImage: ((UIImage) -> Void)? {get set }
+}
 
-    init(personId: Int) {
-        self.personId = personId
+final class DefaultPersonViewModel {
+    var person: Person?
+    var personID: Int
+
+    init(personID: Int) {
+        self.personID = personID
         initPerson()
     }
+
+    var profileImage: ((UIImage) -> Void)?
 
     var onFetchPersonSucceed: SuccessCallback?
 
@@ -32,25 +38,46 @@ extension DefaultPersonViewModel: PersonViewModel {
 
     private func fetchPersonInfo(completion: @escaping (Result<Person, ErrorResponse>) -> Void) {
         Task {
-            let result = await MovieCastService.shared.getPersonInfo(personId: person.id)
+            let result = await MovieCastService.shared.getPersonInfo(personId: personID)
             completion(result)
         }
     }
 
     private func initPerson() {
-        fetchPersonInfo { [weak self] result in
-            guard let self = self else { return }
+        fetchPersonInfo { result in
             switch result {
             case .success(let person):
                 DispatchQueue.main.async {
                     self.person = person
-                    onFetchPersonSucceed()?
+                    self.setPersonImage()
+                    self.onFetchPersonSucceed?()
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("mapping person data with ", error)
-                    onFetchPersonFailure(error)?
+                    self.onFetchPersonFailure?(error)
                 }
+            }
+        }
+    }
+
+    private func personImageRequest(completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
+        guard let path = person?.profileImage else { return }
+        Task {
+            let result = await ImageService.shared.fetchImage(path: path)
+            completion(result)
+        }
+    }
+
+    func setPersonImage() {
+        personImageRequest { result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.profileImage?(image)
+                }
+            case .failure(let error):
+                print("Could get profile image")
             }
         }
     }

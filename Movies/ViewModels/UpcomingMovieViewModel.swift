@@ -11,8 +11,8 @@ protocol UpcomingMovieViewModel {
     func fetchImage(posterPath: String, completion: @escaping  (Result<UIImage, ErrorResponse>)-> Void)
     func getCast(completion: @escaping (Result<CastList, ErrorResponse>) -> Void)
     
-    var onFetchMovieSucceed: (() -> Void)? { set get }
-    var onFetchMovieFailure: ((Error) -> Void)? { set get }
+    var onFetchMovieSucceed: SuccessCallback? { set get }
+    var onFetchMovieFailure: FailureCallback? { set get }
 }
 
 final class DefaultUpcomingMovieViewModel {
@@ -23,10 +23,10 @@ final class DefaultUpcomingMovieViewModel {
         self.movie = movie
         initCast()
     }
+
+    var onFetchMovieSucceed: SuccessCallback?
     
-    var onFetchMovieSucceed: (() -> Void)?
-    
-    var onFetchMovieFailure: ((Error) -> Void)?
+    var onFetchMovieFailure: FailureCallback?
 }
 
 extension DefaultUpcomingMovieViewModel: UpcomingMovieViewModel {
@@ -48,8 +48,7 @@ extension DefaultUpcomingMovieViewModel: UpcomingMovieViewModel {
     }
     
     private func initCast() {
-        getCast { [weak self] result in
-            guard let self = self else { return }
+        getCast { result in
             switch result {
             case .success(let castList):
                 DispatchQueue.main.async {

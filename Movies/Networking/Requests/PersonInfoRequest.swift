@@ -14,7 +14,7 @@ protocol PersonInfoRequest {
 extension PersonInfoRequest {
     func sendPersonInfoRequest<T: Decodable>(endpoint: Endpoint, personId: Int, responseModel: T.Type) async -> Result<T, ErrorResponse>
     {
-        let urlString = endpoint.baseURL + endpoint.path + "\(personId)"
+        let urlString = endpoint.baseURL + endpoint.path + "/\(personId)"
 
         guard var urlComponents = URLComponents(string: urlString) else {
             return .failure(.invalidURL)
@@ -33,6 +33,8 @@ extension PersonInfoRequest {
             return .failure(.unknown)
         }
 
+        print(url.absoluteString)
+
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = endpoint.header
         request.httpMethod = endpoint.method.rawValue
@@ -49,6 +51,7 @@ extension PersonInfoRequest {
                 guard let decodedResponse = try? JSONDecoder().decode(responseModel, from: data) else {
                     return .failure(.decode)
                 }
+
                 return .success(decodedResponse)
             case 401:
                 return .failure(.unauthorized)

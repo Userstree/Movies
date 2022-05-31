@@ -10,8 +10,8 @@ import UIKit
 protocol UpcomingMovieListViewModel: AnyObject {
     var movies: [Movie] { set get }
 
-    var onFetchMovieSucceed: (() -> Void)? { set get }
-    var onFetchMovieFailure: ((Error) -> Void)? { set get }
+    var onFetchMovieSucceed: SuccessCallback? { set get }
+    var onFetchMovieFailure: FailureCallback? { set get }
 
     func fetchData()
 }
@@ -20,9 +20,9 @@ final class DefaultUpcomingMovieListViewModel {
     
     var movies: [Movie] = []
     
-    var onFetchMovieSucceed: (() -> Void)?
+    var onFetchMovieSucceed: SuccessCallback?
     
-    var onFetchMovieFailure: ((Error) -> Void)?
+    var onFetchMovieFailure: FailureCallback?
     
     private let service: MovieServiceable
     

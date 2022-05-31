@@ -9,15 +9,18 @@ import UIKit
 
 struct Person: Codable {
     let biography: String
+    let id: Int
+    let name: String
+    let knownFor: String
     let birthday: String?
     let profileImage: String?
-    let id: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case birthday
         case biography
         case id
+        case name
+        case knownFor = "known_for_department"
         case profileImage = "profile_path"
     }
-    init(){}
 }

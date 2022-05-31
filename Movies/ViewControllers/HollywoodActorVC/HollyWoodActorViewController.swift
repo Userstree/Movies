@@ -45,7 +45,6 @@ class HollyWoodActorViewController: UIViewController {
         .font(ofSize: 16, weight: .regular)
         .textColor(.gray)
         .numberOfLines(2)
-        .text("22-02-1973")
     
     lazy var departmentTitleLabel = UILabel()
         .font(ofSize: 18, weight: .bold)
@@ -90,11 +89,34 @@ class HollyWoodActorViewController: UIViewController {
         view.backgroundColor = .darkVioletBackgroundColor
         configureViews()
         mapModel()
+        bindToViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mapModel()
+    }
+
+    private func bindToViewModel() {
+        viewModel.onFetchPersonSucceed = { [weak self ] in
+            self?.viewWillAppear(true)
+        }
+
+        viewModel.onFetchPersonFailure = { error in
+            print(error)
+        }
     }
     
     private func mapModel() {
-        self.nameLabel.text = viewModel.name
-        self.departmentLabel.text = viewModel.knownFor
+        guard let person = viewModel.person else { return }
+        self.nameLabel.text = person.name
+        self.departmentLabel.text = person.knownFor
+        self.biographyDescrtiptionLabel.text = person.biography
+        self.birthdayLabel.text = person.birthday
+        viewModel.profileImage = { [weak self] image in
+            guard let self = self else { return }
+            self.imageView.image = image
+        }
     }
 
     private func configureViews() {

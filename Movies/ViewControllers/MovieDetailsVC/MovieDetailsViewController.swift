@@ -216,7 +216,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personId: viewModel.castOfActors[indexPath.item].id) )
+        let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personID: viewModel.castOfActors[indexPath.item].id) )
         self.navigationController?.pushViewController(actorVC, animated: true)
     }
 }
