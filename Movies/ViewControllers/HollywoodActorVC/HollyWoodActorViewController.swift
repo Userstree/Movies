@@ -9,10 +9,10 @@ import UIKit
 
 class HollyWoodActorViewController: UIViewController {
     
-    private var model: ActorCast
+    private var viewModel: PersonViewModel
     
-    init(actor: ActorCast) {
-        self.model = actor
+    init(viewModel: PersonViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -93,9 +93,8 @@ class HollyWoodActorViewController: UIViewController {
     }
     
     private func mapModel() {
-        self.nameLabel.text = model.name
-        self.departmentLabel.text = model.knownFor
-        
+        self.nameLabel.text = viewModel.name
+        self.departmentLabel.text = viewModel.knownFor
     }
 
     private func configureViews() {

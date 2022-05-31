@@ -124,10 +124,7 @@ class MovieDetailsViewController: UIViewController {
         self.movieRatingLabel.text = "★\(viewModel.movie.rating)"
         self.movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
 
-        let imagePath = viewModel.movie.posterPath
-        
-        
-        viewModel.fetchImage(posterPath: imagePath) { [weak self] result in
+        viewModel.fetchImage(posterPath: viewModel.movie.posterPath) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -219,7 +216,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let actorVC = HollyWoodActorViewController(actor: viewModel.castOfActors[indexPath.item])
+        let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personId: viewModel.castOfActors[indexPath.item].id) )
         self.navigationController?.pushViewController(actorVC, animated: true)
     }
 }
