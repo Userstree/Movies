@@ -86,7 +86,7 @@ class MovieCell: UICollectionViewCell {
         self.movieTitle.text = movie.title
         self.movieRating.text = "★\(movie.rating)"
         self.movieRating.backgroundColor = movie.ratingLabelColor.labelColor
-        self.genreSubtext.text = "Horror, Movie, Drama, Fantasy, Adventure"
+        self.genreSubtext.text = "\(movie.genreIDs)"
 
         loadImage(path: movie.posterPath) { [weak self] result in
             guard let self = self else { return }

@@ -52,11 +52,11 @@ class MainTableViewController: UIViewController {
     
     private func bindViewModelEvent() {
         
-        viewModel.onFetchMovieSucceed = { [weak self] in
+        viewModel.onFetchSucceed = { [weak self] in
                 self?.tableView.reloadData()
         }
         
-        viewModel.onFetchMovieFailure = { error in
+        viewModel.onFetchFailure = { error in
             print(error)
         }
     }
@@ -122,7 +122,6 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SubCollectionViewHScrollCell.identifier, for: indexPath) as! SubCollectionViewHScrollCell
-        
         cell.bindWith(viewModel: viewModel)
         cell.backgroundColor = .clear
         cell.delegate = self
