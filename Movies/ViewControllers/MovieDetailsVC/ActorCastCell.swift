@@ -14,6 +14,7 @@ class ActorCastCell: UICollectionViewCell {
     lazy var imgView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 120 / 2
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -36,14 +37,12 @@ class ActorCastCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         configureViews()
     }
     
     private func configureViews() {
         [imgView, nameLabel, roleLabel].forEach(mainVerticalStack.addArrangedSubview)
         contentView.addSubview(mainVerticalStack)
-        imgView.layer.cornerRadius = self.imgView.frame.width / 2
         makeConstraints()
     }
     
@@ -70,7 +69,7 @@ class ActorCastCell: UICollectionViewCell {
                     self.imgView.image = image
                 }
             case .failure(let error):
-                print(error)
+                print("Failed to set profile image", error)
             }
         }
     }

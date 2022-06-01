@@ -38,7 +38,7 @@ class MovieCell: UICollectionViewCell {
         .axis(.vertical)
         .alignment(.leading)
         .spacing(2)
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()

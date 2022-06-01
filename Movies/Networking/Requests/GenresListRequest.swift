@@ -33,8 +33,6 @@ extension GenresListRequest {
             return .failure(.unknown)
         }
 
-        print(url.absoluteString)
-
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = endpoint.header
         request.httpMethod = endpoint.method.rawValue
