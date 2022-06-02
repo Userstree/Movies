@@ -20,7 +20,7 @@ final class DefaultUpcomingMovieListViewModel {
     
     var movies: [Movie] = []
     
-    var genres: [Genre] = []
+    var allGenres: [Genre] = []
     
     var onFetchSucceed: SuccessCallback?
     
@@ -31,6 +31,10 @@ final class DefaultUpcomingMovieListViewModel {
     init(service: MovieServiceable) {
         self.service = service
         fetchGenresList()
+    }
+
+    convenience init() {
+        self.init(service: MovieService())
     }
 }
 
@@ -57,14 +61,23 @@ extension DefaultUpcomingMovieListViewModel: UpcomingMovieListViewModel {
             switch result {
             case .success(let genresList):
                 DispatchQueue.main.async {
-                    self.genres = genresList
+                    self.allGenres = genresList.genres
+                    genresList.genres.forEach { genre in
+                        print(genre["name"])
+                    }
                     self.onFetchSucceed?()
                 }
             case .failure(let error):
-                print("error getting genres")
+                print("error getting genres ", error)
                 self.onFetchFailure?(error)
             }
         }
     }
 
+    private func makeGenresFromIDs() {
+//        var genresDict: [Int: String] = allGenres.map(<#T##transform: (Genre) throws -> T##(Movies.Genre) throws -> T#>)
+//        movies.forEach { movie in
+//
+//        }
+    }
 }

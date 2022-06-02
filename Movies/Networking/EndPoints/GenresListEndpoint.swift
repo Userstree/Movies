@@ -23,7 +23,7 @@ extension GenresListEndpoint: Endpoint {
     var path: String {
         switch self {
         case .genres:
-            return "/genre/movie/list"
+            return "genre/movie/list"
         }
     }
     
