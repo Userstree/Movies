@@ -25,7 +25,7 @@ class MainTableViewController: UIViewController {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(SubCollectionViewHScrollCell.self, forCellReuseIdentifier: SubCollectionViewHScrollCell.identifier)
+        tableView.register(MoviesListCollectionViewHScrollCell.self, forCellReuseIdentifier: MoviesListCollectionViewHScrollCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
@@ -121,7 +121,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SubCollectionViewHScrollCell.identifier, for: indexPath) as! SubCollectionViewHScrollCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MoviesListCollectionViewHScrollCell.identifier, for: indexPath) as! MoviesListCollectionViewHScrollCell
         cell.bindWith(viewModel: viewModel)
         cell.backgroundColor = .clear
         cell.delegate = self

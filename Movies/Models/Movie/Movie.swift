@@ -18,7 +18,7 @@ struct Movie: Codable {
             return .good
         }
     }
-    var genres: [String] = ["Empty"]
+    var genres: [String]?
 
     let genreIDs: [Int]?
     let id: Int

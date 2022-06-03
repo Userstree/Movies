@@ -34,7 +34,7 @@
 		615B41823B884BEA494D8A72 /* Upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B49CB09AC9A5F14AE4EBE /* Upcoming.swift */; };
 		615B44027408415C7146DED4 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4F0B5DAB2C78621345B5 /* NowPlaying.swift */; };
 		615B47FA0B30D61C8D694631 /* Encodable + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4305E2F18A0F4A0966C9 /* Encodable + ext.swift */; };
-		C2342A2728369C9200E073A2 /* SubCollectionViewHScrollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2342A2628369C9200E073A2 /* SubCollectionViewHScrollCell.swift */; };
+		C2342A2728369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2342A2628369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift */; };
 		C2342A292836B7E000E073A2 /* UIStackView + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2342A282836B7E000E073A2 /* UIStackView + ext.swift */; };
 		C2C53FD62846FEF60073CF3A /* GenresListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C53FD52846FEF50073CF3A /* GenresListRequest.swift */; };
 		C2C53FD82847003F0073CF3A /* GenresListEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C53FD72847003F0073CF3A /* GenresListEndpoint.swift */; };
@@ -86,7 +86,7 @@
 		615B49CB09AC9A5F14AE4EBE /* Upcoming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upcoming.swift; sourceTree = "<group>"; };
 		615B4F0B5DAB2C78621345B5 /* NowPlaying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlaying.swift; sourceTree = "<group>"; };
 		95C7B6357A2237E237726F08 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
-		C2342A2628369C9200E073A2 /* SubCollectionViewHScrollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCollectionViewHScrollCell.swift; sourceTree = "<group>"; };
+		C2342A2628369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListCollectionViewHScrollCell.swift; sourceTree = "<group>"; };
 		C2342A282836B7E000E073A2 /* UIStackView + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + ext.swift"; sourceTree = "<group>"; };
 		C2C53FD52846FEF50073CF3A /* GenresListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListRequest.swift; sourceTree = "<group>"; };
 		C2C53FD72847003F0073CF3A /* GenresListEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListEndpoint.swift; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				052D1EE028366F1E007A9EF1 /* MainTableViewController.swift */,
-				C2342A2628369C9200E073A2 /* SubCollectionViewHScrollCell.swift */,
+				C2342A2628369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift */,
 				056D83632833A80600155B9B /* MovieCell.swift */,
 			);
 			path = MainVC;
@@ -477,7 +477,7 @@
 				056C52C328375511004F764E /* ListOfMoviesViewController.swift in Sources */,
 				052D1EDB28365B50007A9EF1 /* MovieImageEndpoint.swift in Sources */,
 				0597298A28350A86004D695D /* Endpoint.swift in Sources */,
-				C2342A2728369C9200E073A2 /* SubCollectionViewHScrollCell.swift in Sources */,
+				C2342A2728369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift in Sources */,
 				0597298C28350A9A004D695D /* MovieInfoRequest.swift in Sources */,
 				C2D737452845619200D292E4 /* PersonEndpoint.swift in Sources */,
 				056C52C72837790E004F764E /* GenreCell.swift in Sources */,

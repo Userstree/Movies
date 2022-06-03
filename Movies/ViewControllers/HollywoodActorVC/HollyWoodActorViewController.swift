@@ -70,7 +70,7 @@ class HollyWoodActorViewController: UIViewController {
         return $0
     }(UITextView())
     
-    lazy var horizontalSubStack = UIStackView()
+    lazy var topHorizontalSubStack = UIStackView()
         .axis(.horizontal)
         .spacing(10)
     
@@ -127,9 +127,9 @@ class HollyWoodActorViewController: UIViewController {
          departmentTitleLabel,
          departmentLabel].forEach(rightVerticalSubStack.addArrangedSubview)
         
-        [imageView, rightVerticalSubStack].forEach(horizontalSubStack.addArrangedSubview)
+        [imageView, rightVerticalSubStack].forEach(topHorizontalSubStack.addArrangedSubview)
         
-        [horizontalSubStack, biographyTitleLabel, biographyDescrtiptionLabel].forEach(mainVerticalStack.addArrangedSubview)
+        [topHorizontalSubStack, biographyTitleLabel, biographyDescrtiptionLabel].forEach(mainVerticalStack.addArrangedSubview)
         
         view.addSubview(mainVerticalStack)
     

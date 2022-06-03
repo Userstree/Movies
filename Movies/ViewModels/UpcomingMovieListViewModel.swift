@@ -8,7 +8,8 @@
 import UIKit
 
 protocol UpcomingMovieListViewModel: AnyObject {
-    var movies: [Movie] { set get } 
+    var movies: [Movie] { set get }
+    var allGenres: [Genre] { get set }
 
     var onFetchSucceed: SuccessCallback? { set get }
     var onFetchFailure: FailureCallback? { set get }
@@ -30,6 +31,7 @@ final class DefaultUpcomingMovieListViewModel {
     
     init(service: MovieServiceable) {
         self.service = service
+        fetchData()
         fetchGenresList()
     }
 
@@ -62,9 +64,7 @@ extension DefaultUpcomingMovieListViewModel: UpcomingMovieListViewModel {
             case .success(let genresList):
                 DispatchQueue.main.async {
                     self.allGenres = genresList.genres
-                    genresList.genres.forEach { genre in
-                        print(genre["name"])
-                    }
+                    self.populate(movies: &self.movies, with: genresList.genres)
                     self.onFetchSucceed?()
                 }
             case .failure(let error):
@@ -74,10 +74,17 @@ extension DefaultUpcomingMovieListViewModel: UpcomingMovieListViewModel {
         }
     }
 
-    private func makeGenresFromIDs() {
-//        var genresDict: [Int: String] = allGenres.map(<#T##transform: (Genre) throws -> T##(Movies.Genre) throws -> T#>)
-//        movies.forEach { movie in
-//
-//        }
+    private func populate(movies: inout [Movie], with genres: [Genre])  {
+        for i in 0..<movies.count {
+            guard let listOfIDs = movies[i].genreIDs else { return }
+            let genresStringList = makeGenresList(genreIDs: listOfIDs)
+            movies[i].genres = genresStringList
+            print(movies[i].genres)
+        }
+    }
+
+    private func makeGenresList(genreIDs: [Int]) -> [String] {
+        let filtered = allGenres.filter { genreIDs.contains($0.id) }
+        return filtered.map { $0.name }
     }
 }

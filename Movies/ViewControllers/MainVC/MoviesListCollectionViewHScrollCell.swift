@@ -12,7 +12,7 @@ protocol CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int)
 }
 
-class SubCollectionViewHScrollCell: UITableViewCell {
+class MoviesListCollectionViewHScrollCell: UITableViewCell {
     
     static let identifier = "SubCollectionViewHScrollCell"
     
@@ -59,7 +59,7 @@ class SubCollectionViewHScrollCell: UITableViewCell {
     }
 }
 
-extension SubCollectionViewHScrollCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension MoviesListCollectionViewHScrollCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         models.count

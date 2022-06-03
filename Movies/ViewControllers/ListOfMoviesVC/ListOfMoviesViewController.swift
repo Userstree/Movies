@@ -117,12 +117,12 @@ extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource
 extension ListOfMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        genres.count
+        viewModel.allGenres.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.identifier, for: indexPath) as! GenreCell
-        cell.genreLabel.text = genres[indexPath.item]
+        cell.genreLabel.text = viewModel.allGenres[indexPath.item].name //genres[indexPath.item]
         cell.genreLabel.sizeToFit()
         return cell
     }
@@ -131,7 +131,7 @@ extension ListOfMoviesViewController: UICollectionViewDelegate, UICollectionView
 extension ListOfMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let label = UILabel(frame: CGRect.zero)
-        label.text = genres[indexPath.item]
+        label.text = viewModel.allGenres[indexPath.item].name //genres[indexPath.item]
         label.sizeToFit()
         return CGSize(width: label.frame.width, height: 30)
     }
