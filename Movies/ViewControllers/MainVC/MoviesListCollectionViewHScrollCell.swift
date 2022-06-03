@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol CollectionCellDelegate {
-    func passIndexOfCollectionCell(collectionViewItemIndex: Int)
+    func passIndexOfCollectionCell(collectionViewItemIndex: Int, categoryNumber: Int)
 }
 
 class MoviesListCollectionViewHScrollCell: UITableViewCell {
@@ -17,6 +17,8 @@ class MoviesListCollectionViewHScrollCell: UITableViewCell {
     static let identifier = "SubCollectionViewHScrollCell"
     
     var models = [Movie]()
+
+    var categoryNumber: Int = 0
 
     var delegate: CollectionCellDelegate?
     
@@ -52,9 +54,10 @@ class MoviesListCollectionViewHScrollCell: UITableViewCell {
             $0.edges.equalTo(contentView.safeAreaLayoutGuide.snp.margins)
         }
     }
-    
-    func bindWith(viewModel: UpcomingMovieListViewModel) {
-        self.models = viewModel.movies
+
+    func bindWith(models: [Movie], sectionNumber: Int) {
+        self.models = models
+        self.categoryNumber = sectionNumber
         collectionView.reloadData()
     }
 }
@@ -76,6 +79,6 @@ extension MoviesListCollectionViewHScrollCell: UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.passIndexOfCollectionCell(collectionViewItemIndex: indexPath.item)
+        delegate?.passIndexOfCollectionCell(collectionViewItemIndex: indexPath.item, categoryNumber: categoryNumber)
     }
 }

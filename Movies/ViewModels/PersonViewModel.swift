@@ -77,7 +77,7 @@ extension DefaultPersonViewModel: PersonViewModel {
                     self.profileImage?(image)
                 }
             case .failure(let error):
-                print("Could get profile image")
+                print("Could get profile image ", error)
             }
         }
     }

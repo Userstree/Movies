@@ -30,14 +30,14 @@ class MovieCell: UICollectionViewCell {
         .font(ofSize: 16, weight: .semibold)
     
     lazy var genreSubtext = UILabel()
-        .font(ofSize: 12, weight: .regular)
+        .font(ofSize: 14, weight: .regular)
         .numberOfLines(0)
         .textColor(.gray) 
     
     private lazy var mainVerticalStack = UIStackView()
         .axis(.vertical)
         .alignment(.leading)
-        .spacing(2)
+        .spacing(1)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,10 +83,12 @@ class MovieCell: UICollectionViewCell {
     }
 
     func setup(with movie: Movie) {
+        guard let genres = movie.genres else { return }
+
         self.movieTitle.text = movie.title
         self.movieRating.text = "★\(movie.rating)"
         self.movieRating.backgroundColor = movie.ratingLabelColor.labelColor
-        self.genreSubtext.text = "\(movie.genres)"
+        self.genreSubtext.text = "\(genres.joined(separator: ", "))"
 
         loadImage(path: movie.posterPath) { [weak self] result in
             guard let self = self else { return }

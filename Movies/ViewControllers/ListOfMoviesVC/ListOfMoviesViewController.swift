@@ -9,15 +9,17 @@ import UIKit
 import SnapKit
 
 class ListOfMoviesViewController: UIViewController {
-    
-    private var viewModel: UpcomingMovieListViewModel
-    
-    private var genres = ["Horror", "Adventure", "Drama", "Comedy", "Thriller", "Drama", "Comedy", "Thriller"]
-    
-    init(viewModel: UpcomingMovieListViewModel, genres: [String]) {
-        self.viewModel = viewModel
+
+    private var movies: [Movie]
+
+    private var genres: [Genre]
+
+    init(movies: [Movie], genres: [Genre]) {
+        self.movies = movies
+        self.genres = genres
         super.init(nibName: nil, bundle: nil)
     }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -88,12 +90,12 @@ class ListOfMoviesViewController: UIViewController {
 extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.movies.count
+        movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieCardCell.identifier, for: indexPath) as! MovieCardCell
-        cell.configure(with: viewModel.movies[indexPath.row])
+        cell.configure(with: movies[indexPath.row])
         cell.imgView.layer.cornerRadius = 15
         cell.imgView.clipsToBounds = true
         cell.backgroundColor = .clear
@@ -106,8 +108,8 @@ extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.movies[indexPath.row])
-        let movieVC = MovieDetailsViewController(viewModel: detailsViewModel, genre: ["adventure, crime, mystery"])
+        let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: movies[indexPath.row])
+        let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
         self.navigationController?.pushViewController(movieVC, animated: true)
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
@@ -117,12 +119,12 @@ extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource
 extension ListOfMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.allGenres.count
+        genres.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.identifier, for: indexPath) as! GenreCell
-        cell.genreLabel.text = viewModel.allGenres[indexPath.item].name //genres[indexPath.item]
+        cell.genreLabel.text = genres[indexPath.item].name //genres[indexPath.item]
         cell.genreLabel.sizeToFit()
         return cell
     }
@@ -131,7 +133,7 @@ extension ListOfMoviesViewController: UICollectionViewDelegate, UICollectionView
 extension ListOfMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let label = UILabel(frame: CGRect.zero)
-        label.text = viewModel.allGenres[indexPath.item].name //genres[indexPath.item]
+        label.text = genres[indexPath.item].name
         label.sizeToFit()
         return CGSize(width: label.frame.width, height: 30)
     }

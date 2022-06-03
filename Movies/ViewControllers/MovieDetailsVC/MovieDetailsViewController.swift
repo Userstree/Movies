@@ -11,7 +11,7 @@ class MovieDetailsViewController: UIViewController {
 
     private var viewModel: UpcomingMovieViewModel
 
-    init(viewModel: UpcomingMovieViewModel, genre: [String]) {
+    init(viewModel: UpcomingMovieViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

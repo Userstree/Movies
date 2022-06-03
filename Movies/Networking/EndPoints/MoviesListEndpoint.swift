@@ -7,10 +7,11 @@
 
 import Foundation
 
-enum MoviesListEndpoint {
-    case upcoming
-    case nowPlaying
-    
+enum MoviesListEndpoint: String {
+    case upcoming = "Soon at the cinema"
+    case nowPlaying = "Today at the cinema"
+    case topRated = "Top Rated"
+    case popular = "Popular movies"
 }
 
 extension MoviesListEndpoint: Endpoint {
@@ -28,19 +29,23 @@ extension MoviesListEndpoint: Endpoint {
             return "movie/upcoming"
         case .nowPlaying:
             return "movie/now_playing"
+        case .topRated:
+            return "movie/top_rated"
+        case .popular:
+            return "movie/popular"
         }
     }
     
     var method: RequestMethod {
         switch self {
-        case .upcoming, .nowPlaying:
+        case .upcoming, .nowPlaying, .topRated, .popular:
             return .get
         }
     }
     
     var header: [String : String]? {
         switch self {
-        case .upcoming, .nowPlaying:
+        case .upcoming, .nowPlaying, .topRated, .popular:
             return [
                 "Content-Type" : "application/json;charset=utf-8"
             ]
@@ -49,7 +54,7 @@ extension MoviesListEndpoint: Endpoint {
     
     var body: [String : String]? {
         switch self {
-        case .upcoming, .nowPlaying:
+        case .upcoming, .nowPlaying, .topRated, .popular:
             return nil
         }
     }

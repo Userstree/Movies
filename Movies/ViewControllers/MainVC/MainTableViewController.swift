@@ -10,9 +10,9 @@ import SnapKit
 
 class MainTableViewController: UIViewController {
     
-    private let viewModel: UpcomingMovieListViewModel
+    private let viewModel: MoviesListViewModel
     
-    init(viewModel: UpcomingMovieListViewModel) {
+    init(viewModel: MoviesListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -20,9 +20,12 @@ class MainTableViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private var movieCategory: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies", "Top rated"]
-    
+
+    private var categoriesList: [MoviesListEndpoint] = [MoviesListEndpoint.nowPlaying,
+                                                        MoviesListEndpoint.upcoming,
+                                                        MoviesListEndpoint.topRated,
+                                                        MoviesListEndpoint.popular]
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(MoviesListCollectionViewHScrollCell.self, forCellReuseIdentifier: MoviesListCollectionViewHScrollCell.identifier)
@@ -36,7 +39,7 @@ class MainTableViewController: UIViewController {
         super.loadView()
         navigationController?.navigationBar.barStyle = .black
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +85,7 @@ class MainTableViewController: UIViewController {
 extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        movieCategory.count
+        categoriesList.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,21 +93,22 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        movieCategory[section]
+        categoriesList[section].rawValue
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
             let label = UILabel()
-            label.text = movieCategory[section]
+            label.text = categoriesList[section].rawValue
             label.textColor = .white
             label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
             
             let seeAllButton = UIButton()
             seeAllButton.setTitle("All", for: .normal)
             seeAllButton.setTitleColor(.orange, for: .normal)
-            seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
-            
+            seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped(_:)), for: .touchUpInside)
+            seeAllButton.tag = section
+
             let stack = UIStackView()
                 .axis(.horizontal)
                 .distribution(.fillProportionally)
@@ -122,22 +126,58 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MoviesListCollectionViewHScrollCell.identifier, for: indexPath) as! MoviesListCollectionViewHScrollCell
-        cell.bindWith(viewModel: viewModel)
+        switch categoriesList[indexPath.section] {
+            case .upcoming:
+                cell.bindWith(models: viewModel.upcomingMovies, sectionNumber: indexPath.section)
+            case .nowPlaying:
+                cell.bindWith(models: viewModel.todayMovies, sectionNumber: indexPath.section)
+            case .topRated:
+                cell.bindWith(models: viewModel.topRatedMovies, sectionNumber: indexPath.section)
+            case .popular:
+                cell.bindWith(models: viewModel.popularMovies, sectionNumber: indexPath.section)
+        }
         cell.backgroundColor = .clear
         cell.delegate = self
         return cell
     }
                  
-    @objc private func seeAllButtonTapped() {
-        let listOfMoviesVC = ListOfMoviesViewController(viewModel: viewModel, genres: movieCategory)
-        self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+    @objc private func seeAllButtonTapped(_ sender: UIButton) {
+        switch categoriesList[sender.tag] {
+        case .upcoming:
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.upcomingMovies, genres: viewModel.allGenres)
+            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+        case .nowPlaying:
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.todayMovies, genres: viewModel.allGenres)
+            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+        case .topRated:
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.topRatedMovies, genres: viewModel.allGenres)
+            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+        case .popular:
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.popularMovies, genres: viewModel.allGenres)
+            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+        }
     }
 }
 
 extension MainTableViewController: CollectionCellDelegate {
-    func passIndexOfCollectionCell(collectionViewItemIndex: Int) {
-        let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.movies[collectionViewItemIndex])
-        let movieVC = MovieDetailsViewController(viewModel: detailsViewModel, genre: ["adventure, crime, mystery"])
-        self.navigationController?.pushViewController(movieVC, animated: true)
+    func passIndexOfCollectionCell(collectionViewItemIndex: Int, categoryNumber: Int) {
+        switch categoriesList[categoryNumber] {
+            case .nowPlaying:
+                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.todayMovies[collectionViewItemIndex])
+                let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            case .upcoming:
+                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.upcomingMovies[collectionViewItemIndex])
+                let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            case .topRated:
+                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.topRatedMovies[collectionViewItemIndex])
+                let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            case .popular:
+                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.popularMovies[collectionViewItemIndex])
+                let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
+                self.navigationController?.pushViewController(movieVC, animated: true)
+        }
     }
 }
