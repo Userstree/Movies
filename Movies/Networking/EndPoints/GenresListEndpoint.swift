@@ -14,10 +14,7 @@ enum GenresListEndpoint {
 extension GenresListEndpoint: Endpoint {
     
     var queryItems: [String : String] {
-        let accessToken = "7a9ff9d95f6e5dc76e22f1989c7255d6"
-        return [
-            "api_key" : accessToken
-        ]
+        return ["api_key" : "7a9ff9d95f6e5dc76e22f1989c7255d6"]
     }
     
     var path: String {
@@ -34,12 +31,12 @@ extension GenresListEndpoint: Endpoint {
         }
     }
     
-    var header: [String: String]? {
-        switch self {
-        case .genres:
-            return [
-                "Content-Type" : "application/json;charset=utf-8"
-            ]
-        }
-    }
+//    var header: [String: String]? {
+//        switch self {
+//        case .genres:
+//            return [
+//                "Content-Type" : "application/json;charset=utf-8"
+//            ]
+//        }
+//    }
 }

@@ -24,4 +24,10 @@ extension Endpoint {
     var appendToRequest: String {
         return "&append_to_response="
     }
+
+    var header: [String: String]? {
+        [
+            "Content-Type": "application/json;charset=utf-8"
+        ]
+    }
 }
