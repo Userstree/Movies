@@ -69,6 +69,7 @@ class BaseRepository {
             return .failure(.unknown)
         }
     }
+
     func getImage(_ path: String, queryParams: [String: Any?]? = nil) async -> Result<UIImage, ErrorResponse> {
         let urlString = "https://image.tmdb.org/t/p/" + basePath + path
 

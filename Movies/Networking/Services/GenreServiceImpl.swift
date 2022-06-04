@@ -8,6 +8,7 @@
 import Foundation
 
 class GenreServiceImpl: BaseRepository, GenreService {
+
     init() {
         super.init(basePath: "")
     }
