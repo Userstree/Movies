@@ -23,8 +23,6 @@
 		059729722834C334004D695D /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059729712834C334004D695D /* MovieDetailsViewController.swift */; };
 		059729772834D2C9004D695D /* ActorCastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059729762834D2C9004D695D /* ActorCastCell.swift */; };
 		0597297B2834EEA0004D695D /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597297A2834EEA0004D695D /* MovieService.swift */; };
-		0597298A28350A86004D695D /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597298928350A86004D695D /* Endpoint.swift */; };
-		0597298C28350A9A004D695D /* MovieInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597298B28350A9A004D695D /* MovieInfoRequest.swift */; };
 		0597298E28350AA5004D695D /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597298D28350AA5004D695D /* RequestMethod.swift */; };
 		0597299028350AB0004D695D /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0597298F28350AB0004D695D /* ErrorResponse.swift */; };
 		059729922835102F004D695D /* MoviesListEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059729912835102F004D695D /* MoviesListEndpoint.swift */; };
@@ -68,8 +66,6 @@
 		059729712834C334004D695D /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		059729762834D2C9004D695D /* ActorCastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCastCell.swift; sourceTree = "<group>"; };
 		0597297A2834EEA0004D695D /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
-		0597298928350A86004D695D /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		0597298B28350A9A004D695D /* MovieInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoRequest.swift; sourceTree = "<group>"; };
 		0597298D28350AA5004D695D /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		0597298F28350AB0004D695D /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		059729912835102F004D695D /* MoviesListEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListEndpoint.swift; sourceTree = "<group>"; };
@@ -116,14 +112,6 @@
 				C2D7373F2841C86A00D292E4 /* PersonViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		05294A95283E0CF3003B7959 /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				0597298B28350A9A004D695D /* MovieInfoRequest.swift */,
-			);
-			path = Requests;
 			sourceTree = "<group>";
 		};
 		056C52BF28374FFE004F764E /* HollywoodActorVC */ = {
@@ -249,7 +237,6 @@
 		059729792834EE27004D695D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				05294A95283E0CF3003B7959 /* Requests */,
 				0597297C2834EEC8004D695D /* Base */,
 				05972988283503D7004D695D /* EndPoints */,
 				0597297D2834EED0004D695D /* Services */,
@@ -262,7 +249,6 @@
 			children = (
 				0597298F28350AB0004D695D /* ErrorResponse.swift */,
 				0597298D28350AA5004D695D /* RequestMethod.swift */,
-				0597298928350A86004D695D /* Endpoint.swift */,
 				615B475D1129D4B39DE79223 /* BaseRepository.swift */,
 			);
 			path = Base;
@@ -457,9 +443,7 @@
 				C2342A292836B7E000E073A2 /* UIStackView + ext.swift in Sources */,
 				056D834F2833A26300155B9B /* SceneDelegate.swift in Sources */,
 				056C52C328375511004F764E /* ListOfMoviesViewController.swift in Sources */,
-				0597298A28350A86004D695D /* Endpoint.swift in Sources */,
 				C2342A2728369C9200E073A2 /* MoviesListCollectionViewHScrollCell.swift in Sources */,
-				0597298C28350A9A004D695D /* MovieInfoRequest.swift in Sources */,
 				056C52C72837790E004F764E /* GenreCell.swift in Sources */,
 				0597297B2834EEA0004D695D /* MovieService.swift in Sources */,
 				C2D737402841C86A00D292E4 /* PersonViewModel.swift in Sources */,
