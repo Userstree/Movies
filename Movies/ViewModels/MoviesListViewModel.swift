@@ -36,10 +36,12 @@ final class DefaultMoviesListViewModel {
 
     var onFetchFailure: FailureCallback?
 
-    private let service: MovieServiceable
+    private let service: MovieService
+    private let genreService: GenreService
 
-    init(service: MovieServiceable) {
+    init(service: MovieService, genreService: GenreService) {
         self.service = service
+        self.genreService = genreService
         fetchGenresList()
         fetchData()
     }
@@ -97,7 +99,7 @@ extension DefaultMoviesListViewModel: MoviesListViewModel {
 
     private func fetchGenresList() {
         Task {
-            let result = await service.getGenresList()
+            let result = await genreService.getGenresList()
             switch result {
             case .success(let genresList):
                 DispatchQueue.main.async {

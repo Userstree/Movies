@@ -76,7 +76,7 @@ class ActorCastCell: UICollectionViewCell {
     
     private func loadImage(path: String, completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
         Task {
-            let result = await ImageService.shared.fetchImage(path: path)
+            let result = await ImageServiceSingleton.shared.fetchImage(path: path)
             completion(result)
         }
     }

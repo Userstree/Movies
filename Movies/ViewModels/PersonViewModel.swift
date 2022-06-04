@@ -38,7 +38,7 @@ extension DefaultPersonViewModel: PersonViewModel {
 
     private func fetchPersonInfo(completion: @escaping (Result<Person, ErrorResponse>) -> Void) {
         Task {
-            let result = await MovieCastService.shared.getPersonInfo(personId: personID)
+            let result = await MovieCastServiceSingleton.sharedPerson.getPersonInfo(personId: personID)
             completion(result)
         }
     }
@@ -64,7 +64,7 @@ extension DefaultPersonViewModel: PersonViewModel {
     private func personImageRequest(completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
         guard let path = person?.profileImage else { return }
         Task {
-            let result = await ImageService.shared.fetchImage(path: path)
+            let result = await ImageServiceSingleton.shared.fetchImage(path: path)
             completion(result)
         }
     }
