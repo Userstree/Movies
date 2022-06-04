@@ -117,7 +117,6 @@ class BaseRepository {
                 return .failure(.unauthorized)
 
             default:
-                print(response.statusCode)
                 return .failure(.unexpectedStatusCode)
             }
         } catch {

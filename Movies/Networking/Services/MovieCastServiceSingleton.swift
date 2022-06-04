@@ -22,11 +22,11 @@ final class MovieCastServiceSingleton {
 class MovieCastServiceImpl: BaseRepository, MovieCastService {
 
     init() {
-        super.init(basePath: "movies")
+        super.init(basePath: "movie")
     }
 
     func getMovieCast(movieID: Int) async -> Result<CastList, ErrorResponse> {
-        await get("/movie/\(movieID)")
+        await get("/\(movieID)/credits")
     }
 }
 
@@ -37,6 +37,6 @@ class PersonServiceImpl: BaseRepository, PersonService {
     }
 
     func getPersonInfo(personId: Int) async -> Result<Person, ErrorResponse> {
-        await get("/person/\(personId)")
+        await get("/\(personId)")
     }
 }
