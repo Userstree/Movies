@@ -163,19 +163,19 @@ extension MainTableViewController: CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int, categoryNumber: Int) {
         switch categoriesList[categoryNumber] {
             case .nowPlaying:
-                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.todayMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.todayMovies[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .upcoming:
-                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.upcomingMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.upcomingMovies[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .topRated:
-                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.topRatedMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.topRatedMovies[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .popular:
-                let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: viewModel.popularMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.popularMovies[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
         }

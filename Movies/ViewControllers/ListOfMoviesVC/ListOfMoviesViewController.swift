@@ -108,7 +108,7 @@ extension ListOfMoviesViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailsViewModel = DefaultUpcomingMovieViewModel.init(movie: movies[indexPath.row])
+        let detailsViewModel = DefaultMovieViewModel.init(movie: movies[indexPath.row])
         let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
         self.navigationController?.pushViewController(movieVC, animated: true)
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)

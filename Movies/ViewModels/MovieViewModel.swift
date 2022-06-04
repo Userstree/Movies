@@ -4,7 +4,7 @@
 
 import UIKit
 
-protocol UpcomingMovieViewModel {
+protocol MovieViewModel {
     var movie: Movie { get set }
     var castOfActors: [ActorCast] { get set }
     
@@ -15,7 +15,7 @@ protocol UpcomingMovieViewModel {
     var onFetchMovieFailure: FailureCallback? { set get }
 }
 
-final class DefaultUpcomingMovieViewModel {
+final class DefaultMovieViewModel {
     var movie: Movie
     var castOfActors: [ActorCast] = []
 
@@ -29,7 +29,7 @@ final class DefaultUpcomingMovieViewModel {
     var onFetchMovieFailure: FailureCallback?
 }
 
-extension DefaultUpcomingMovieViewModel: UpcomingMovieViewModel {
+extension DefaultMovieViewModel: MovieViewModel {
 
     func fetchImage(posterPath: String, completion: @escaping  (Result<UIImage, ErrorResponse>) -> Void) {
         Task {
