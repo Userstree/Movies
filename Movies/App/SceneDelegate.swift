@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         let viewModel: MoviesListViewModel = DefaultMoviesListViewModel(
-            service: MovieService()
+            service: MovieServiceImpl(), genreService: GenreServiceImpl()
         )
         
         let rootController = MainTableViewController(viewModel: viewModel)

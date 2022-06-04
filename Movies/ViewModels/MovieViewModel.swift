@@ -33,7 +33,7 @@ extension DefaultMovieViewModel: MovieViewModel {
 
     func fetchImage(posterPath: String, completion: @escaping  (Result<UIImage, ErrorResponse>) -> Void) {
         Task {
-            let result = await ImageService.shared.fetchImage(path: posterPath)
+            let result = await ImageServiceSingleton.shared.fetchImage(path: posterPath)
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -42,7 +42,7 @@ extension DefaultMovieViewModel: MovieViewModel {
     
     func getCast(completion: @escaping (Result<CastList, ErrorResponse>) -> Void) {
         Task {
-            let result = await MovieCastService.shared.getMovieCast(movieID: movie.id)
+            let result = await MovieCastServiceSingleton.shared.getMovieCast(movieID: movie.id)
             completion(result)
         }
     }

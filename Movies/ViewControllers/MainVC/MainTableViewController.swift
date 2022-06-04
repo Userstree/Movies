@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 
 class MainTableViewController: UIViewController {
-    
+
     private let viewModel: MoviesListViewModel
-    
+
     init(viewModel: MoviesListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -34,7 +34,7 @@ class MainTableViewController: UIViewController {
         tableView.backgroundColor = .clear
         return tableView
     }()
-    
+
     override func loadView() {
         super.loadView()
         navigationController?.navigationBar.barStyle = .black
@@ -42,7 +42,7 @@ class MainTableViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setTitleAndBackground()
         configureViews()
         fetchData()
@@ -52,29 +52,29 @@ class MainTableViewController: UIViewController {
     private func fetchData() {
         viewModel.fetchData()
     }
-    
+
     private func bindViewModelEvent() {
-        
+
         viewModel.onFetchSucceed = { [weak self] in
                 self?.tableView.reloadData()
         }
-        
+
         viewModel.onFetchFailure = { error in
             print(error)
         }
     }
-    
+
     private func setTitleAndBackground() {
         view.backgroundColor = .darkVioletBackgroundColor
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         title = "Movies"
     }
-    
+
     private func configureViews() {
         view.addSubview(tableView)
         makeConstraints()
     }
-    
+
     private func makeConstraints() {
         tableView.snp.makeConstraints{
             $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
@@ -83,7 +83,7 @@ class MainTableViewController: UIViewController {
 }
 
 extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         categoriesList.count
     }
@@ -91,18 +91,18 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         categoriesList[section].rawValue
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
             let label = UILabel()
             label.text = categoriesList[section].rawValue
             label.textColor = .white
             label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-            
+
             let seeAllButton = UIButton()
             seeAllButton.setTitle("All", for: .normal)
             seeAllButton.setTitleColor(.orange, for: .normal)
@@ -119,11 +119,11 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return header
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         300
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MoviesListCollectionViewHScrollCell.identifier, for: indexPath) as! MoviesListCollectionViewHScrollCell
         switch categoriesList[indexPath.section] {
@@ -140,7 +140,7 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         return cell
     }
-                 
+
     @objc private func seeAllButtonTapped(_ sender: UIButton) {
         switch categoriesList[sender.tag] {
         case .upcoming:
