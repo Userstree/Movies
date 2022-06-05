@@ -46,22 +46,10 @@ class MainTableViewController: UIViewController {
         setTitleAndBackground()
         configureViews()
         fetchData()
-        bindViewModelEvent()
     }
 
     private func fetchData() {
         viewModel.fetchData()
-    }
-
-    private func bindViewModelEvent() {
-
-        viewModel.onFetchSucceed = { [weak self] in
-                self?.tableView.reloadData()
-        }
-
-        viewModel.onFetchFailure = { error in
-            print(error)
-        }
     }
 
     private func setTitleAndBackground() {
@@ -128,13 +116,21 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MoviesListCollectionViewHScrollCell.identifier, for: indexPath) as! MoviesListCollectionViewHScrollCell
         switch categoriesList[indexPath.section] {
             case .upcoming:
-                cell.bindWith(models: viewModel.upcomingMovies, sectionNumber: indexPath.section)
+                viewModel.upcomingMovies.bindAndFire {
+                    cell.bindWith(models: $0, sectionNumber: indexPath.section)
+                }
             case .nowPlaying:
-                cell.bindWith(models: viewModel.todayMovies, sectionNumber: indexPath.section)
+                viewModel.todayMovies.bindAndFire {
+                    cell.bindWith(models: $0, sectionNumber: indexPath.section)
+                }
             case .topRated:
-                cell.bindWith(models: viewModel.topRatedMovies, sectionNumber: indexPath.section)
+                viewModel.topRatedMovies.bindAndFire {
+                    cell.bindWith(models: $0, sectionNumber: indexPath.section)
+                }
             case .popular:
-                cell.bindWith(models: viewModel.popularMovies, sectionNumber: indexPath.section)
+                viewModel.popularMovies.bindAndFire {
+                    cell.bindWith(models: $0, sectionNumber: indexPath.section)
+                }
         }
         cell.backgroundColor = .clear
         cell.delegate = self
@@ -144,16 +140,16 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
     @objc private func seeAllButtonTapped(_ sender: UIButton) {
         switch categoriesList[sender.tag] {
         case .upcoming:
-            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.upcomingMovies, genres: viewModel.allGenres)
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.upcomingMovies.value, genres: viewModel.allGenres.value)
             self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .nowPlaying:
-            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.todayMovies, genres: viewModel.allGenres)
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.todayMovies.value, genres: viewModel.allGenres.value)
             self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .topRated:
-            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.topRatedMovies, genres: viewModel.allGenres)
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.topRatedMovies.value, genres: viewModel.allGenres.value)
             self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .popular:
-            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.popularMovies, genres: viewModel.allGenres)
+            let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.popularMovies.value, genres: viewModel.allGenres.value)
             self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
         }
     }
@@ -163,19 +159,19 @@ extension MainTableViewController: CollectionCellDelegate {
     func passIndexOfCollectionCell(collectionViewItemIndex: Int, categoryNumber: Int) {
         switch categoriesList[categoryNumber] {
             case .nowPlaying:
-                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.todayMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.todayMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .upcoming:
-                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.upcomingMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.upcomingMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .topRated:
-                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.topRatedMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.topRatedMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
             case .popular:
-                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.popularMovies[collectionViewItemIndex])
+                let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.popularMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
                 self.navigationController?.pushViewController(movieVC, animated: true)
         }

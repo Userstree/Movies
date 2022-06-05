@@ -8,19 +8,9 @@ protocol ImageService {
     func fetchImage(path: String) async -> Result<UIImage, ErrorResponse>
 }
 
-struct ImageServiceSingleton {
-    static let shared: ImageService = ImageServiceImpl()
+class ImageServiceSingleton {
 
     init() {}
-}
 
-class ImageServiceImpl: BaseRepository, ImageService {
-
-    init() {
-        super.init(basePath: "w500")
-    }
-
-    func fetchImage(path: String) async -> Result<UIImage, ErrorResponse> {
-        await getImage(path)
-    }
+    static let shared: ImageService = ImageServiceImpl()
 }
