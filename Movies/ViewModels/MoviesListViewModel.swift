@@ -8,40 +8,31 @@
 import UIKit
 
 protocol MoviesListViewModel: AnyObject {
-    var upcomingMovies: [Movie] { set get }
-    var allGenres: [Genre] { get set }
-    var todayMovies: [Movie] { get set }
-    var topRatedMovies: [Movie] { get set }
-    var popularMovies: [Movie] { get set }
-
-    var onFetchSucceed: SuccessCallback? { set get }
-    var onFetchFailure: FailureCallback? { set get }
+    var upcomingMovies:     Observed<[Movie]> { set get }
+    var allGenres:          Observed<[Genre]> { get set }
+    var todayMovies:        Observed<[Movie]> { get set }
+    var topRatedMovies:     Observed<[Movie]> { get set }
+    var popularMovies:      Observed<[Movie]> { get set }
 
     func fetchData()
 }
 
 final class DefaultMoviesListViewModel {
 
-    var upcomingMovies: [Movie] = []
+    var upcomingMovies  =  Observed<[Movie]>([])
+    var todayMovies     =  Observed<[Movie]>([])
+    var topRatedMovies  =  Observed<[Movie]>([])
+    var popularMovies   =  Observed<[Movie]>([])
+    var allGenres       =  Observed<[Genre]>([])
 
-    var todayMovies: [Movie] = []
+    var packOfCategories = [Observed<[Movie]>]()
 
-    var topRatedMovies: [Movie] = []
+    private let moviesService: MovieService
+    private let genresService: GenreService
 
-    var popularMovies: [Movie] = []
-
-    var allGenres: [Genre] = []
-
-    var onFetchSucceed: SuccessCallback?
-
-    var onFetchFailure: FailureCallback?
-
-    private let service: MovieService
-    private let genreService: GenreService
-
-    init(service: MovieService, genreService: GenreService) {
-        self.service = service
-        self.genreService = genreService
+    init(moviesService: MovieService, genresService: GenreService) {
+        self.moviesService = moviesService
+        self.genresService = genresService
         fetchGenresList()
         fetchData()
     }
@@ -51,70 +42,78 @@ extension DefaultMoviesListViewModel: MoviesListViewModel {
 
     func fetchData() {
         Task {
-            let upcomingMoviesResponse = await service.getUpcomingMovies()
+            let upcomingMoviesResponse = await moviesService.getUpcomingMovies()
+            let nowPlayingMoviesResponse = await moviesService.getNowPlayingMovies()
+            let topRatedMoviesResponse = await moviesService.getTopRatedMovies()
+            let popularMoviesResponse = await moviesService.getPopularMovies()
+
+            let moviesResponses = [upcomingMoviesResponse, nowPlayingMoviesResponse, topRatedMoviesResponse, popularMoviesResponse]
+//            var packOfCategories = [upcomingMovies, todayMovies, topRatedMovies, popularMovies]
+//
+//                for i in 0..<moviesResponses.count {
+//                    switch moviesResponses[i] {
+//                    case .success(let listOfMovies):
+//                        self.packOfCategories[i].value = listOfMovies.movies
+//
+//                    case .failure(let response):
+//                        print(response)
+//                    }
+//                }
+
             switch upcomingMoviesResponse {
-            case .success(let upComing):
+            case .success(let upcoming):
                 DispatchQueue.main.async {
-                    self.upcomingMovies = upComing.movies
-                    self.onFetchSucceed?()
+                    self.upcomingMovies.value = upcoming.movies
                 }
             case .failure(let error):
-                self.onFetchFailure?(error)
+                print("Error ", error)
             }
 
-            let nowPlayingMoviesResponse = await service.getNowPlayingMovies()
             switch nowPlayingMoviesResponse {
-            case .success(let moviesList):
+            case .success(let nowPlaying):
                 DispatchQueue.main.async {
-                    self.todayMovies = moviesList.movies
-                    self.onFetchSucceed?()
+                    self.todayMovies.value = nowPlaying.movies
                 }
             case .failure(let error):
-                self.onFetchFailure?(error)
+                print("Error caused ",error)
             }
 
-            let topRatedMoviesResponse = await service.getTopRatedMovies()
             switch topRatedMoviesResponse {
-            case .success(let moviesList):
+            case .success(let topRated):
                 DispatchQueue.main.async {
-                    self.topRatedMovies = moviesList.movies
-                    self.onFetchSucceed?()
+                    self.topRatedMovies.value = topRated.movies
                 }
             case .failure(let error):
-                self.onFetchFailure?(error)
+                print("Error caused ",error)
             }
 
-            let popularMoviesResponse = await service.getPopularMovies()
             switch popularMoviesResponse {
-            case .success(let moviesList):
+            case .success(let popular):
                 DispatchQueue.main.async {
-                    self.popularMovies = moviesList.movies
-                    self.onFetchSucceed?()
+                    self.popularMovies.value = popular.movies
                 }
             case .failure(let error):
-                self.onFetchFailure?(error)
+                print("Error caused ",error)
             }
         }
     }
 
     private func fetchGenresList() {
         Task {
-            let result = await genreService.getGenresList()
+            let result = await genresService.getGenresList()
             switch result {
             case .success(let genresList):
                 DispatchQueue.main.async {
-                    self.allGenres = genresList.genres
+                    self.allGenres.value = genresList.genres
                     Task {
-                        await self.populate(movies: &self.upcomingMovies, with: genresList.genres)
-                        await self.populate(movies: &self.todayMovies, with: genresList.genres)
-                        await self.populate(movies: &self.topRatedMovies, with: genresList.genres)
-                        await self.populate(movies: &self.popularMovies, with: genresList.genres)
+                        await self.populate(movies: &self.upcomingMovies.value, with: genresList.genres)
+                        await self.populate(movies: &self.todayMovies.value, with: genresList.genres)
+                        await self.populate(movies: &self.topRatedMovies.value, with: genresList.genres)
+                        await self.populate(movies: &self.popularMovies.value, with: genresList.genres)
                     }
-                    self.onFetchSucceed?()
                 }
             case .failure(let error):
                 print("error getting genres ", error)
-                self.onFetchFailure?(error)
             }
         }
     }
@@ -130,7 +129,7 @@ extension DefaultMoviesListViewModel: MoviesListViewModel {
     }
 
     private func makeGenresList(genreIDs: [Int]) -> [String] {
-        let filtered = allGenres.filter {
+        let filtered = allGenres.value.filter {
             genreIDs.contains($0.id)
         }
         return filtered.map {

@@ -38,7 +38,7 @@ extension DefaultPersonViewModel: PersonViewModel {
 
     private func fetchPersonInfo(completion: @escaping (Result<Person, ErrorResponse>) -> Void) {
         Task {
-            let result = await MovieCastServiceSingleton.sharedPerson.getPersonInfo(personId: personID)
+            let result = await PersonServiceSingleton.sharedPerson.getPersonInfo(personId: personID)
             completion(result)
         }
     }
