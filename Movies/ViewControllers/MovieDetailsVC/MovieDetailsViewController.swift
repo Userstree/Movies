@@ -10,6 +10,11 @@ import UIKit
 class MovieDetailsViewController: UIViewController {
 
     private var viewModel: MovieViewModel
+    {
+        didSet {
+            castCollectionView.reloadData()
+        }
+    }
 
     init(viewModel: MovieViewModel) {
         self.viewModel = viewModel
@@ -59,11 +64,6 @@ class MovieDetailsViewController: UIViewController {
         return $0
     }(UILabel())
 
-    lazy private var movieVerticalStack = UIStackView()
-            .axis(.vertical)
-            .spacing(0)
-            .alignment(.leading)
-
     /*>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     lazy var castLalel = UILabel()
             .text("Cast")
@@ -95,7 +95,6 @@ class MovieDetailsViewController: UIViewController {
 
         view.backgroundColor = .darkVioletBackgroundColor
         configureView()
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 150)
         loadImageAndLabel()
         setData()
     }
@@ -144,6 +143,7 @@ class MovieDetailsViewController: UIViewController {
 
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges).offset(5)
+            $0.bottom.equalTo(castCollectionView.snp.bottom)
         }
 
         imageView.snp.makeConstraints {

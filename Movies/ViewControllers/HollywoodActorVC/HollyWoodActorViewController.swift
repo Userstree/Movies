@@ -60,15 +60,13 @@ class HollyWoodActorViewController: UIViewController {
             .textColor(.white)
             .text("Biography")
 
-    lazy var biographyDescrtiptionLabel: UITextView = {
-        $0.isEditable = false
-        $0.isScrollEnabled = false
-
+    lazy var biographyDescriptionLabel: UILabel = {
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
         $0.backgroundColor = .clear
+        $0.numberOfLines = 0
         return $0
-    }(UITextView())
+    }(UILabel())
 
     lazy var topHorizontalSubStack = UIStackView()
             .axis(.horizontal)
@@ -79,9 +77,12 @@ class HollyWoodActorViewController: UIViewController {
             .distribution(.fillEqually)
             .spacing(4)
 
-    lazy var mainVerticalStack = UIStackView()
-            .axis(.vertical)
-            .spacing(10)
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .clear
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +94,8 @@ class HollyWoodActorViewController: UIViewController {
     }
 
     private func bindWithPersonEvents() {
-        viewModel.onFetchPersonSucceed = { [weak self ] in
-            self?.viewWillLayoutSubviews()
+        viewModel.onFetchPersonSucceed = { [weak self] in
+            self?.mapModel()
         }
 
         viewModel.onFetchPersonFailure = { error in
@@ -103,13 +104,17 @@ class HollyWoodActorViewController: UIViewController {
     }
 
     private func mapModel() {
-        guard let person = viewModel.person else { return }
+        guard let person = viewModel.person else {
+            return
+        }
         self.nameLabel.text = person.name
         self.departmentLabel.text = person.knownFor
-        self.biographyDescrtiptionLabel.text = person.biography
+        self.biographyDescriptionLabel.text = person.biography
         self.birthdayLabel.text = person.birthday
         viewModel.profileImage = { [weak self] image in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             self.imageView.image = image
         }
     }
@@ -124,25 +129,49 @@ class HollyWoodActorViewController: UIViewController {
 
         [imageView, rightVerticalSubStack].forEach(topHorizontalSubStack.addArrangedSubview)
 
-        [topHorizontalSubStack, biographyTitleLabel, biographyDescrtiptionLabel].forEach(mainVerticalStack.addArrangedSubview)
+        [topHorizontalSubStack, biographyTitleLabel, biographyDescriptionLabel].forEach(scrollView.addSubview)
 
-        view.addSubview(mainVerticalStack)
+        view.addSubview(scrollView)
 
         makeConstraints()
     }
 
     private func makeConstraints() {
 
-        mainVerticalStack.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges).inset(UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
+        scrollView.snp.makeConstraints {
+
+            $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges).offset(5)
+            $0.bottom.equalTo(biographyDescriptionLabel.snp.bottom)
         }
 
         imageView.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
             $0.size.equalTo(CGSize(width: 125, height: 200))
+            $0.leading.equalTo(scrollView.snp.leading)
+        }
+
+        rightVerticalSubStack.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.top)
+            $0.trailing.equalTo(scrollView.snp.trailing)
+            $0.height.equalTo(imageView.snp.height)
+        }
+
+        topHorizontalSubStack.snp.makeConstraints {
+            $0.height.equalTo(imageView.snp.height)
+            $0.top.equalTo(scrollView.snp.top)
+            $0.width.equalTo(scrollView.snp.width)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         biographyTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(10)
             $0.height.equalTo(25)
+        }
+
+        biographyDescriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(biographyTitleLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(scrollView.snp.leading)
+            $0.width.equalTo(scrollView.snp.width)
         }
     }
 }

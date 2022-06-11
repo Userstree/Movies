@@ -10,7 +10,12 @@ import SnapKit
 
 class MainTableViewController: UIViewController {
 
-    private let viewModel: MoviesListViewModel
+    private var viewModel: MoviesListViewModel
+//    {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
 
     init(viewModel: MoviesListViewModel) {
         self.viewModel = viewModel
@@ -54,7 +59,7 @@ class MainTableViewController: UIViewController {
 
     private func setTitleAndBackground() {
         view.backgroundColor = .darkVioletBackgroundColor
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         title = "Movies"
     }
 
@@ -141,16 +146,16 @@ extension MainTableViewController: UITableViewDelegate, UITableViewDataSource {
         switch categoriesList[sender.tag] {
         case .upcoming:
             let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.upcomingMovies.value, genres: viewModel.allGenres.value)
-            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+            navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .nowPlaying:
             let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.todayMovies.value, genres: viewModel.allGenres.value)
-            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+            navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .topRated:
             let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.topRatedMovies.value, genres: viewModel.allGenres.value)
-            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+            navigationController?.pushViewController(listOfMoviesVC, animated: true)
         case .popular:
             let listOfMoviesVC = ListOfMoviesViewController(movies: viewModel.popularMovies.value, genres: viewModel.allGenres.value)
-            self.navigationController?.pushViewController(listOfMoviesVC, animated: true)
+            navigationController?.pushViewController(listOfMoviesVC, animated: true)
         }
     }
 }
@@ -161,19 +166,19 @@ extension MainTableViewController: CollectionCellDelegate {
             case .nowPlaying:
                 let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.todayMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
-                self.navigationController?.pushViewController(movieVC, animated: true)
+                navigationController?.pushViewController(movieVC, animated: true)
             case .upcoming:
                 let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.upcomingMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
-                self.navigationController?.pushViewController(movieVC, animated: true)
+                navigationController?.pushViewController(movieVC, animated: true)
             case .topRated:
                 let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.topRatedMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
-                self.navigationController?.pushViewController(movieVC, animated: true)
+                navigationController?.pushViewController(movieVC, animated: true)
             case .popular:
                 let detailsViewModel = DefaultMovieViewModel.init(movie: viewModel.popularMovies.value[collectionViewItemIndex])
                 let movieVC = MovieDetailsViewController(viewModel: detailsViewModel)
-                self.navigationController?.pushViewController(movieVC, animated: true)
+                navigationController?.pushViewController(movieVC, animated: true)
         }
     }
 }
