@@ -113,10 +113,8 @@ class BaseRepository {
                 }
 
                 return .success(image)
-
             case 401:
                 return .failure(.unauthorized)
-
             default:
                 return .failure(.unexpectedStatusCode)
             }

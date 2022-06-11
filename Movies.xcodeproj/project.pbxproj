@@ -250,7 +250,7 @@
 				0597297C2834EEC8004D695D /* Base */,
 				05972988283503D7004D695D /* EndPoints */,
 				0597297D2834EED0004D695D /* Services */,
-				615B4EC7E1F52369EC43B993 /* Components */,
+				615B4EC7E1F52369EC43B993 /* Observer */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -314,12 +314,12 @@
 			path = Movies;
 			sourceTree = "<group>";
 		};
-		615B4EC7E1F52369EC43B993 /* Components */ = {
+		615B4EC7E1F52369EC43B993 /* Observer */ = {
 			isa = PBXGroup;
 			children = (
 				615B4A495DF92F917EBA5957 /* Observer.swift */,
 			);
-			path = Components;
+			path = Observer;
 			sourceTree = "<group>";
 		};
 		B98A0688218FC5895BA9268C /* Pods */ = {
