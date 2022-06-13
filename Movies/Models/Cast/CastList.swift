@@ -4,12 +4,7 @@
 
 import Foundation
 
-struct CastList: Codable {
+class CastList: NSObject, Codable {
     let id: Int
     let cast: [ActorCast]
-
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case cast = "cast"
-//    }
 }

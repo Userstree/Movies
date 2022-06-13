@@ -25,6 +25,8 @@ final class DefaultMoviesListViewModel {
     var popularMovies   =  Observed<[Movie]>([])
     var allGenres       =  Observed<[Genre]>([])
 
+    var allMoviesCached = NSCache<NSString, MoviesResponse>()
+
     var packOfCategories = [Observed<[Movie]>]()
 
     private let moviesService: MovieService
@@ -46,19 +48,6 @@ extension DefaultMoviesListViewModel: MoviesListViewModel {
             let nowPlayingMoviesResponse = await moviesService.getNowPlayingMovies()
             let topRatedMoviesResponse = await moviesService.getTopRatedMovies()
             let popularMoviesResponse = await moviesService.getPopularMovies()
-
-            let moviesResponses = [upcomingMoviesResponse, nowPlayingMoviesResponse, topRatedMoviesResponse, popularMoviesResponse]
-//            var packOfCategories = [upcomingMovies, todayMovies, topRatedMovies, popularMovies]
-//
-//                for i in 0..<moviesResponses.count {
-//                    switch moviesResponses[i] {
-//                    case .success(let listOfMovies):
-//                        self.packOfCategories[i].value = listOfMovies.movies
-//
-//                    case .failure(let response):
-//                        print(response)
-//                    }
-//                }
 
             switch upcomingMoviesResponse {
             case .success(let upcoming):

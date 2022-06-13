@@ -41,6 +41,9 @@ extension DefaultMovieViewModel: MovieViewModel {
     }
 
     private func initCast() {
+
+        print("Movie id is ", movie.id)
+
         getCast { result in
             switch result {
             case .success(let castList):
