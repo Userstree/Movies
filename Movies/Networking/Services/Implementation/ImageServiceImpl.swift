@@ -7,7 +7,7 @@ import UIKit
 class ImageServiceImpl: BaseRepository, ImageService {
 
     init() {
-        super.init(basePath: "w500")
+        super.init(basePath: "w200")
     }
 
     func fetchImage(path: String) async -> Result<UIImage, ErrorResponse> {

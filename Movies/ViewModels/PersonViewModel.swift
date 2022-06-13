@@ -15,7 +15,7 @@ protocol PersonViewModel {
     var personID: Int { get set }
     var onFetchPersonSucceed: SuccessCallback? { get set }
     var onFetchPersonFailure: FailureCallback? { get set }
-    var profileImage: ((UIImage) -> Void)? {get set }
+    var profileImage: ((UIImage) -> Void)? { get set }
 }
 
 final class DefaultPersonViewModel {
@@ -39,7 +39,7 @@ extension DefaultPersonViewModel: PersonViewModel {
     private func fetchPersonInfo(completion: @escaping (Result<Person, ErrorResponse>) -> Void) {
         Task {
             let result = await PersonServiceSingleton.sharedPerson.getPersonInfo(personId: personID)
-            completion(result)
+                completion(result)
         }
     }
 
@@ -47,25 +47,13 @@ extension DefaultPersonViewModel: PersonViewModel {
         fetchPersonInfo { result in
             switch result {
             case .success(let person):
-                DispatchQueue.main.async {
-                    self.person = person
-                    self.setPersonImage()
-                    self.onFetchPersonSucceed?()
-                }
+                self.person = person
+                self.setPersonImage()
+                self.onFetchPersonSucceed?()
             case .failure(let error):
-                DispatchQueue.main.async {
-                    print("mapping person data with ", error)
-                    self.onFetchPersonFailure?(error)
-                }
+                print("mapping person data with ", error)
+                self.onFetchPersonFailure?(error)
             }
-        }
-    }
-
-    private func personImageRequest(completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
-        guard let path = person?.profileImage else { return }
-        Task {
-            let result = await ImageServiceSingleton.shared.fetchImage(path: path)
-            completion(result)
         }
     }
 
@@ -73,13 +61,22 @@ extension DefaultPersonViewModel: PersonViewModel {
         personImageRequest { result in
             switch result {
             case .success(let image):
-                DispatchQueue.main.async {
-                    self.profileImage?(image)
-                }
+                self.profileImage?(image)
             case .failure(let error):
                 print("Could get profile image ", error)
             }
         }
     }
-}
 
+    private func personImageRequest(completion: @escaping (Result<UIImage, ErrorResponse>) -> Void) {
+        guard let path = person?.profileImage else {
+            return
+        }
+        Task {
+            let result = await ImageServiceSingleton.shared.fetchImage(path: path)
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+    }
+}

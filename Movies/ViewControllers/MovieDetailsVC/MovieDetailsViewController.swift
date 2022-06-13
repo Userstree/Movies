@@ -10,6 +10,11 @@ import UIKit
 class MovieDetailsViewController: UIViewController {
 
     private var viewModel: MovieViewModel
+    {
+        didSet {
+            castCollectionView.reloadData()
+        }
+    }
 
     init(viewModel: MovieViewModel) {
         self.viewModel = viewModel
@@ -27,10 +32,9 @@ class MovieDetailsViewController: UIViewController {
         return scrollView
     }()
 
-    //>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<
-
     private var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
 
@@ -43,31 +47,24 @@ class MovieDetailsViewController: UIViewController {
             .clipsToBounds(true)
 
     lazy var movieTitleLabel = UILabel()
+            .numberOfLines(0)
             .font(ofSize: 20, weight: .semibold)
             .textColor(.white)
 
     lazy var dateLabel = UILabel()
             .font(ofSize: 16, weight: .regular)
             .textColor(.white)
-            .text("22-02-2022")
 
-    lazy var movieDescriptionLabel: UITextView = {
-        $0.isEditable = false
-        $0.isScrollEnabled = true
-
+    lazy var movieDescriptionLabel: UILabel = {
+        $0.numberOfLines = 0
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .gray
         $0.text = viewModel.movie.overview
         $0.backgroundColor = .clear
         return $0
-    }(UITextView())
+    }(UILabel())
 
-    lazy private var movieVerticalStack = UIStackView()
-            .axis(.vertical)
-            .spacing(0)
-            .alignment(.leading)
-
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     lazy var castLalel = UILabel()
             .text("Cast")
             .font(ofSize: 18, weight: .semibold)
@@ -98,31 +95,19 @@ class MovieDetailsViewController: UIViewController {
 
         view.backgroundColor = .darkVioletBackgroundColor
         configureView()
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 150)
         loadImageAndLabel()
         setData()
-        bindToViewModelChanges()
     }
 
-    private func bindToViewModelChanges() {
-        viewModel.onFetchMovieSucceed = { [weak self] in
-            self?.castCollectionView.reloadData()
-        }
-        
-        viewModel.onFetchMovieFailure = { error in
-            print(error)
-        }
-    }
-    
     private func setData() {
         title = viewModel.movie.title
-        self.movieTitleLabel.text = viewModel.movie.title
-        self.dateLabel.text = viewModel.movie.releaseDate
+        movieTitleLabel.text = viewModel.movie.title
+        dateLabel.text = viewModel.movie.releaseDate
     }
 
     private func loadImageAndLabel() {
-        self.movieRatingLabel.text = "★\(viewModel.movie.rating)"
-        self.movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
+        movieRatingLabel.text = "★\(viewModel.movie.rating)"
+        movieRatingLabel.backgroundColor = viewModel.movie.ratingLabelColor.labelColor
 
         viewModel.fetchImage(posterPath: viewModel.movie.posterPath) { [weak self] result in
             guard let self = self else {
@@ -140,14 +125,14 @@ class MovieDetailsViewController: UIViewController {
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     private func configureView() {
+
         [imageView,
          movieTitleLabel,
          dateLabel,
          movieDescriptionLabel,
          castLalel,
-         castCollectionView].forEach(movieVerticalStack.addArrangedSubview)
-
-        [movieVerticalStack, movieRatingLabel].forEach(scrollView.addSubview)
+         castCollectionView,
+         movieRatingLabel].forEach(scrollView.addSubview)
 
         view.addSubview(scrollView)
 
@@ -157,13 +142,14 @@ class MovieDetailsViewController: UIViewController {
     private func makeConstraints() {
 
         scrollView.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
+            $0.edges.equalTo(view.safeAreaLayoutGuide.snp.edges).offset(5)
+            $0.bottom.equalTo(castCollectionView.snp.bottom)
         }
 
         imageView.snp.makeConstraints {
             $0.top.equalTo(scrollView.snp.top)
-            $0.height.equalTo(view.frame.height / 2 - 40)
             $0.centerX.equalTo(view.snp.centerX)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         movieRatingLabel.snp.makeConstraints {
@@ -172,52 +158,55 @@ class MovieDetailsViewController: UIViewController {
             $0.size.equalTo(CGSize(width: 60, height: 25))
         }
 
-        movieVerticalStack.snp.makeConstraints {
-            $0.height.equalTo(800)
-        }
-
         movieTitleLabel.snp.makeConstraints {
-            $0.height.equalTo(40)
-            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
+            $0.top.equalTo(imageView.snp.bottom).offset(150)
+            $0.width.equalTo(scrollView.snp.width)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         dateLabel.snp.makeConstraints {
-            $0.height.equalTo(40)
-            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
+            $0.top.equalTo(movieTitleLabel.snp.bottom).offset(10)
+            $0.width.equalTo(scrollView.snp.width)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         movieDescriptionLabel.snp.makeConstraints {
-            $0.width.equalTo(self.view.snp.width)
+            $0.top.equalTo(dateLabel.snp.bottom).offset(10)
+            $0.width.equalTo(view.snp.width)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         castLalel.snp.makeConstraints {
+            $0.top.equalTo(movieDescriptionLabel.snp.bottom)
             $0.height.equalTo(40)
-            $0.leading.equalTo(self.movieVerticalStack.snp.leading)
+            $0.leading.equalTo(scrollView.snp.leading)
         }
 
         castCollectionView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: self.view.frame.width - 10, height: 180))
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
+            $0.top.equalTo(castLalel.snp.bottom).offset(10)
+            $0.size.equalTo(CGSize(width: view.frame.width - 10, height: 180))
         }
     }
 }
 
 extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.castOfActors.count
+        viewModel.castOfActors.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActorCastCell.identifier, for: indexPath) as! ActorCastCell
-        
-        cell.configure(with: viewModel.castOfActors[indexPath.item])
+
+        cell.configure(with: viewModel.castOfActors.value[indexPath.item])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personID: viewModel.castOfActors[indexPath.item].id) )
-        self.navigationController?.pushViewController(actorVC, animated: true)
+        viewModel.castOfActors.bindAndFire { casts in
+            let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personID: casts[indexPath.item].id))
+            self.navigationController?.pushViewController(actorVC, animated: true)
+            collectionView.reloadData()
+        }
     }
 }
 

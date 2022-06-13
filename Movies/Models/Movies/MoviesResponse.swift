@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MoviesResponse: Codable {
+class MoviesResponse: NSObject, Codable {
     let totalResults: Int
     let totalPages: Int
     let movies: [Movie]
