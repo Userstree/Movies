@@ -9,12 +9,13 @@ import UIKit
 
 class MovieDetailsViewController: UIViewController {
 
-    private var viewModel: MovieViewModel
-    {
+    private var viewModel: MovieViewModel {
         didSet {
             castCollectionView.reloadData()
         }
     }
+
+    // MARK: - Vars & Lets
 
     init(viewModel: MovieViewModel) {
         self.viewModel = viewModel
@@ -90,6 +91,8 @@ class MovieDetailsViewController: UIViewController {
         return collection
     }()
 
+    // MARK: - Controller lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,6 +101,8 @@ class MovieDetailsViewController: UIViewController {
         loadImageAndLabel()
         setData()
     }
+
+    // MARK: - Private methods
 
     private func setData() {
         title = viewModel.movie.title
@@ -123,7 +128,8 @@ class MovieDetailsViewController: UIViewController {
         }
     }
 
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    // MARK: - Configuration of the View
+
     private func configureView() {
 
         [imageView,
@@ -187,9 +193,27 @@ class MovieDetailsViewController: UIViewController {
             $0.size.equalTo(CGSize(width: view.frame.width - 10, height: 180))
         }
     }
+
 }
 
-extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+// MARK: - UICollectionViewDelegate
+
+extension MovieDetailsViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.castOfActors.bindAndFire { casts in
+            let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personID: casts[indexPath.item].id))
+            self.navigationController?.pushViewController(actorVC, animated: true)
+            collectionView.reloadData()
+        }
+    }
+
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension MovieDetailsViewController: UICollectionViewDataSource {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.castOfActors.value.count
     }
@@ -201,12 +225,6 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.castOfActors.bindAndFire { casts in
-            let actorVC = HollyWoodActorViewController(viewModel: DefaultPersonViewModel(personID: casts[indexPath.item].id))
-            self.navigationController?.pushViewController(actorVC, animated: true)
-            collectionView.reloadData()
-        }
-    }
 }
+
 

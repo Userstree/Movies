@@ -19,12 +19,16 @@ class GenreCell: UICollectionViewCell {
         .cornerRadius(6)
         .borderColor(.orange)
         .borderWidth(1)
-    
+
+    // MARK: - Controller lifecycle
+
     override func layoutSubviews() {
         super.layoutSubviews()
         
         configureViews()
     }
+
+    // MARK: - Configuration of the View
     
     private func configureViews() {
         contentView.addSubview(genreLabel)

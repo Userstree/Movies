@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum MoviesListEndpoint: String {
     case upcoming = "Soon at the cinema"

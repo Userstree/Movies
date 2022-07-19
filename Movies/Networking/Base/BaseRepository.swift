@@ -6,15 +6,15 @@ import UIKit
 
 class BaseRepository {
 
+    // MARK: - Vars & Lets
+
     var baseURL = "https://api.themoviedb.org/3/"
 
     var decoder = JSONDecoder()
 
     private var basePath: String
 
-    init(basePath: String) {
-        self.basePath = basePath
-    }
+    // MARK: - Private methods
 
     func get<T: Decodable>(_ path: String, queryParams: [String: Any?]? = nil) async -> Result<T, ErrorResponse> {
         let urlString = baseURL + basePath + path
@@ -28,7 +28,7 @@ class BaseRepository {
         queryItems.append(URLQueryItem(name: "api_key", value: "7a9ff9d95f6e5dc76e22f1989c7255d6"))
 
         queryParams?.forEach {
-            let urlQueryItem = URLQueryItem(name: $0.key, value: "\($0.value)")
+            let urlQueryItem = URLQueryItem(name: $0.key, value: String(describing: ($0.value)) ) //"\($0.value)")
             queryItems.append(urlQueryItem)
         }
 
@@ -42,12 +42,10 @@ class BaseRepository {
         request.allHTTPHeaderFields = [
             "Content-Type": "application/json;charset=utf-8"
         ]
-        request.httpMethod = "GET"
+        request.httpMethod = RequestMethod.get.rawValue
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
-
-
 
             guard let response = response as? HTTPURLResponse else {
                 return .failure(.noResponse)
@@ -82,7 +80,7 @@ class BaseRepository {
         queryItems.append(URLQueryItem(name: "api_key", value: "7a9ff9d95f6e5dc76e22f1989c7255d6"))
 
         queryParams?.forEach {
-            let urlQueryItem = URLQueryItem(name: $0.key, value: "\($0.value)")
+            let urlQueryItem = URLQueryItem(name: $0.key, value: String(describing: ($0.value)) )
             queryItems.append(urlQueryItem)
         }
 
@@ -96,7 +94,7 @@ class BaseRepository {
         request.allHTTPHeaderFields = [
             "Content-Type": "application/json;charset=utf-8"
         ]
-        request.httpMethod = "GET"
+        request.httpMethod = RequestMethod.get.rawValue
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -123,6 +121,12 @@ class BaseRepository {
         } catch {
             return .failure(.unknown)
         }
+    }
+
+    // MARK: - Init
+
+    init(basePath: String) {
+        self.basePath = basePath
     }
 
 }
